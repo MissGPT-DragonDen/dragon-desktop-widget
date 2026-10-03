@@ -1,0 +1,127 @@
+﻿{
+    "assetLicense":  "CC0-1.0 (our rights only)",
+    "files":  [
+                  {
+                      "path":  "I18n.ps1",
+                      "sha256":  "1d2ec97b0ed6a0ea40bdfb1aee9591b85e7d382e9280609520062e3ed2ad15ec",
+                      "bytes":  8988
+                  },
+                  {
+                      "path":  "README.en.md",
+                      "sha256":  "f2fe0249fc5333f52937618b9409ad0b2b7aaf155916381c366c8bb1c0073995",
+                      "bytes":  5189
+                  },
+                  {
+                      "path":  "Dragon.ps1",
+                      "sha256":  "e3cec5c52fd572c86f9c5ebde67aa5a1f4d17a970e9a3d36fd72c0e61bd717d1",
+                      "bytes":  38289
+                  },
+                  {
+                      "path":  "State.ps1",
+                      "sha256":  "eee087f249747ddffe07508bfa4015418d4a5b5a972235a2409b76b32f09466c",
+                      "bytes":  8047
+                  },
+                  {
+                      "path":  "Quota.ps1",
+                      "sha256":  "3ece4796720eced36fa4d6ab763bf8c4e5c49b28208529ede79dda59112a43fb",
+                      "bytes":  4640
+                  },
+                  {
+                      "path":  "Placard.ps1",
+                      "sha256":  "d280176e310b912433fc299aa7b69e9e6e7c5372d1c009c14585eaa526bfd002",
+                      "bytes":  3035
+                  },
+                  {
+                      "path":  "Startup.ps1",
+                      "sha256":  "cdbaaf9d5d62d93e928ba53a6b7de22c83035c946c9343c9463e557cbd14625e",
+                      "bytes":  3174
+                  },
+                  {
+                      "path":  "DisableAutoStart.ps1",
+                      "sha256":  "6d3f4faf8eebbd4949d5f6e5fd23533951f1b4e9b0b7e9463438242d5637dffd",
+                      "bytes":  354
+                  },
+                  {
+                      "path":  "Start.vbs",
+                      "sha256":  "3e048c74a5eda985789cbf04b9f4c8372c709b8828be55503db7bdc3e30ab322",
+                      "bytes":  352
+                  },
+                  {
+                      "path":  "Start.cmd",
+                      "sha256":  "f711bde4d79c8593d6f5d0477a0e5c14679130f1ec9692f12330202cccfce8a3",
+                      "bytes":  242
+                  },
+                  {
+                      "path":  "Diagnostic.cmd",
+                      "sha256":  "f432cdf939033c66319ebd1bae412a9786b6e239781b6eb64420505f7cd27f24",
+                      "bytes":  227
+                  },
+                  {
+                      "path":  "Restore.cmd",
+                      "sha256":  "784d8b518c006badcecbfba48baf050df8c78b28e8f2d8d3abf9d6c23a2945b8",
+                      "bytes":  196
+                  },
+                  {
+                      "path":  "DisableAutoStart.cmd",
+                      "sha256":  "83a56781f3eac6f45e4380a4b9390c7352b3f1bf5ee037ae3a621c49ce649562",
+                      "bytes":  108
+                  },
+                  {
+                      "path":  "assets/smug-full.png",
+                      "sha256":  "d0627620affbc2d6215d488586cf03030441582169fe88f9ea8f28082df556a0",
+                      "bytes":  1416955
+                  },
+                  {
+                      "path":  "assets/smug-halfbody-placard.png",
+                      "sha256":  "da5f9561f15bb43698c4a014ae520848432d7d7473ae1eeff97cda9d40f35747",
+                      "bytes":  1824545
+                  },
+                  {
+                      "path":  "README.md",
+                      "sha256":  "f1b76c44066b10e6858eb9c7de3d3ff19bfca91a3280559be43d91a3d0ebc4d2",
+                      "bytes":  4929
+                  },
+                  {
+                      "path":  "PRIVACY.md",
+                      "sha256":  "7e2fc68d8c1d716f5f078ca333a9a6e51770a17ed5181dafba7a16d0769d4bb7",
+                      "bytes":  3801
+                  },
+                  {
+                      "path":  "LICENSE",
+                      "sha256":  "13f64b5bb0902d494c293bb3c19625831bfd648f2c6cc7399d87178f604686a2",
+                      "bytes":  676
+                  },
+                  {
+                      "path":  "NOTICE.md",
+                      "sha256":  "14250e332355c37652853ca6d9458e378050a6d91841fd2033a6698e9b8e642a",
+                      "bytes":  2074
+                  },
+                  {
+                      "path":  "ASSET_RIGHTS.md",
+                      "sha256":  "cc0fe472637f845816c5bfc3ea049aa656a925f8b0f0801bbdc4c7d38a9c1697",
+                      "bytes":  2449
+                  },
+                  {
+                      "path":  "assets/LICENSE.txt",
+                      "sha256":  "67c542351262d852beafc6120f3f5b23583bfdc9cd098ed6f854b10db55f4e04",
+                      "bytes":  896
+                  },
+                  {
+                      "path":  "CHANGELOG.md",
+                      "sha256":  "fbae090cc9c79f7222b4dd75c82b3ffaf18f6c3599b20cfdcca7f3325cbac207",
+                      "bytes":  1830
+                  },
+                  {
+                      "path":  ".gitignore",
+                      "sha256":  "4dac40086a484554af690f4cf5d1d8f8d6c322a57d15d2669dacdc5ef6b881db",
+                      "bytes":  101
+                  },
+                  {
+                      "path":  "Build.ps1",
+                      "sha256":  "3799fa415d6244dbdc551fa9d252ce970f07ff728b43d340b239f0f31b83eb4b",
+                      "bytes":  1548
+                  }
+              ],
+    "codeLicense":  "0BSD",
+    "version":  "1.0.0"
+}

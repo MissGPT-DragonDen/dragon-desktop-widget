@@ -1,0 +1,138 @@
+﻿$script:uiLanguage='zh'
+$script:translations=@{
+    '启动文件名被其他程序占用；未做修改。'='Startup filename is occupied by an unrelated file; nothing changed'
+    '挂件源文件路径已不存在。'='Widget source path no longer exists'
+
+    '暂不可用'='Unavailable'
+    '升级配置备份失败；当前配置未覆盖。'='Settings backup failed; existing settings were kept.'
+    '设置保存失败；退出后可能丢失本次更改。'='Could not save settings; changes may be lost on exit.'
+    '全身Q版'='Full body'
+    '半身像'='Half body'
+    '只支持本地图片'='Local images only'
+    '图片过大'='Image too large'
+    '当前形象图片不可用，显示开发占位；另一槽位保留。'='Image unavailable. Showing a placeholder; the other slot is kept.'
+    '未知角色槽位。'='Unknown character slot.'
+    '只允许本机磁盘上的 PNG / JPEG，不支持网络位置。'='Use a local PNG / JPEG; network paths are not supported.'
+    '图片不得超过10 MiB。'='Image must be at most 10 MiB.'
+    '图片不得超过4096×4096。'='Image must be at most 4096 x 4096.'
+    '图片导入失败：'='Image import failed: '
+    '说一句'='Say something'
+    'ChatGPT 用量状态'='ChatGPT usage status'
+    '设置台词 / 手动用量'='Lines / manual usage'
+    '角色图片|*.png;*.jpg;*.jpeg'='Character images|*.png;*.jpg;*.jpeg'
+    '导入当前形象 PNG / JPEG'='Import current PNG / JPEG'
+    '恢复当前内置形象'='Restore built-in image'
+    '缩小当前形象'='Smaller character'
+    '放大当前形象'='Larger character'
+    '回到右下角'='Return to bottom right'
+    '切换始终置顶'='Toggle always on top'
+    '隐藏到托盘'='Hide to tray'
+    '角色形象'='Appearance'
+    '分别导入角色图'='Import by slot'
+    '导入全身Q版 PNG / JPEG'='Import full-body PNG / JPEG'
+    '导入半身像 PNG / JPEG'='Import half-body PNG / JPEG'
+    '当前形象布局'='Current image alignment'
+    '底部对齐'='Bottom'
+    '居中'='Center'
+    '顶部对齐'='Top'
+    '退出'='Exit'
+    '台词与手动用量 · 无自动读取'='Lines and manual entry'
+    '台词：每行一句，最多30句，每句160字。'='One line per sentence; up to 30 lines of 160 characters.'
+    '随机台词'='Random lines'
+    '手动输入0–100，或主动粘贴“剩余 50%”片段。不是实时查询。留空不更新记录。'='Enter 0–100 or paste "Remaining 50%". This is manual, not live. Blank keeps the previous reading.'
+    '清除手动用量记录'='Clear manual reading'
+    '来源与时间始终标注；30分钟后显示过期。未接入自动来源。不读取屏幕、账号或聊天。'='Manual entries show their source and time and expire after 30 minutes. No screen or chat reading.'
+    '保存'='Save'
+    '上次官方刷新失败；保留旧读数。'='Last official refresh failed; previous reading retained.'
+    '自动刷新已关闭'='Auto-refresh off'
+    ' · 正在读取'=' · Reading'
+    '每'='Every '
+    '分钟自动刷新'=' minutes: auto-refresh'
+    '剩余 '='Remaining '
+    '官方读数不可用'='Usage unavailable'
+    ' · 点击展开官方来源'=' · Click for official source'
+    '刷新中 · 点击查看来源'='Refreshing · Click for source'
+    '旧值 · 点击查看刷新状态'='Old reading · Click for status'
+    '点击查看来源 / 刷新状态'='Click for source / refresh status'
+    '半身用量牌位置（相对图片）'='Half-body placard position'
+    '保存牌子布局'='Save placard layout'
+    '刷新中 · 点击展开'='Refreshing · Click for details'
+    '旧值 · 点击查看状态'='Old reading · Click for details'
+    '点击查看来源 / 更新时间'='Click for source / read time'
+    '周限额：读取失败'='Weekly limit: read failed'
+    '周限额：待读取'='Weekly limit: awaiting reading'
+    '手动剩余：'='Manual remaining: '
+    ' · 旧值'=' · Old reading'
+    '周剩余：'='Weekly remaining: '
+    '立即刷新官方周限额'='Refresh official weekly limit'
+    '官方周限额周期刷新'='Auto-refresh official weekly limit'
+    '刷新间隔'='Refresh interval'
+    ' 分钟'=' minutes'
+    '白毛龙娘挂件 · 双击恢复'='White Dragon · Double-click to restore'
+    '显示 / 恢复'='Show / restore'
+    '隐藏'='Hide'
+    '登录 Windows 后启动'='Start after Windows sign-in'
+    '登录后启动（路径已变化，关闭再开启）'='Startup path changed: toggle off/on'
+    '登录后启动设置已更新；仅影响当前 Windows 用户。'='Startup updated for this Windows user only.'
+    '自启动设置失败：'='Startup setting failed: '
+    '白毛龙娘挂件'='White Dragon Widget'
+    '自启动指向旧目录；请关闭再开启登录后启动来更新路径。'='Startup points to an old folder. Toggle it off/on to update the path.'
+    '半身用量牌布局'='Half-body placard layout'
+    '重置时间：不可用'='Reset time: unavailable'
+    '已到重置时间 · 待读取'='Reset reached · Awaiting reading'
+    '重置：'='Reset: '
+    '约'='~'
+    '天'='d '
+    '小时'='h '
+    '分'='m'
+    '白毛龙娘挂件目录已移动或删除。请从新目录启动，然后将登录后启动关闭再开启，以更新路径。也可运行 DisableAutoStart.cmd 关闭此启动项。'='The widget folder was moved or deleted. Start from its new folder and toggle startup off/on to update the path, or run DisableAutoStart.cmd to disable it.'
+    '呵，就这？'='Heh, is that all?'
+    '累了就休息一下吧。'='Take a break if you are tired.'
+    '我的用量数据还没有可靠来源。'='I do not have a reliable usage reading yet.'
+    '界面显示的剩余百分比（具体额度范围未验证）'='Manually supplied remaining percentage; scope unverified'
+    '每周限额不可用（尚无有效官方读数）。请检查官方客户端登录并刷新。'='Weekly limit unavailable. Check your official client login and refresh.'
+    '旧值 / 待刷新'='Old reading / refresh needed'
+    '官方周期读取'='Official periodic reading'
+    '每周限额剩余：'='Weekly remaining: '
+    '来源：官方 Codex account/rateLimits/read'='Source: official Codex account/rateLimits/read'
+    '更新时间：'='Read at: '
+    '范围：Codex / Work 共享周限额；不含普通聊天，不是 credits。'='Scope: shared Codex / Work weekly limit; excludes ordinary chats and credits.'
+    '已过期（超过30分钟）'='Expired (over 30 minutes)'
+    '手动记录，非实时'='Manual reading, not live'
+    '手动粘贴文字'='Manually pasted text'
+    '手动录入'='Manual entry'
+    '剩余：'='Remaining: '
+    '来源：'='Source: '
+    '记录时间：'='Recorded: '
+    '额度范围未验证；余额 / 今日消耗：不可用。'='Scope unverified; money balance / daily spend unavailable.'
+    '只粘贴剩余百分比片段，不要粘贴账户或聊天内容。'='Paste only a remaining percentage, not account or chat content.'
+    '请输入0–100，或仅粘贴“剩余 50%”这样的单一片段。'='Enter 0–100 or only a fragment such as "Remaining 50%".'
+    '剩余百分比必须在0–100之间。'='Remaining percentage must be between 0 and 100.'
+    '每周限额'='Weekly limit'
+    '开发占位 · 非成品'='Development placeholder'
+    '白毛龙娘挂件 · 开发候选'='White Dragon Widget · Community edition'
+    '语言 / Language'='Language / 语言'
+}
+function T([string]$Text){
+    if($script:uiLanguage -ne 'en'){foreach($key in $script:translations.Keys){if($Text -eq $script:translations[$key]){return $key}};return $Text}
+    foreach($key in ($script:translations.Keys|Sort-Object Length -Descending)){$Text=$Text.Replace($key,$script:translations[$key])}
+    return $Text
+}
+function Get-UiOriginal([string]$Text){
+    foreach($key in $script:translations.Keys){if($Text -eq $script:translations[$key]){return $key}}
+    return $Text
+}
+$script:uiOriginals=@{}
+function Refresh-UiNode($Node){
+    if($null -eq $Node -or $Node -is [Windows.Controls.TextBox]){return}
+    foreach($name in @('Header','Text','ToolTip','Content')){
+        $property=$Node.PSObject.Properties[$name]
+        if($null -ne $property -and $property.Value -is [string]){
+            $key=[string][Runtime.CompilerServices.RuntimeHelpers]::GetHashCode($Node)+':'+$name
+            if(!$script:uiOriginals.ContainsKey($key)){$script:uiOriginals[$key]=Get-UiOriginal $property.Value}
+            $Node.$name=T $script:uiOriginals[$key]
+        }
+    }
+    if($Node -is [Windows.Controls.ItemsControl]){foreach($child in $Node.Items){Refresh-UiNode $child}}
+    foreach($child in [Windows.LogicalTreeHelper]::GetChildren($Node)){if($child -is [Windows.DependencyObject]){Refresh-UiNode $child}}
+}

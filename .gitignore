@@ -1,0 +1,9 @@
+settings*.json
+*.bak
+*.tmp
+*.log
+restore.request
+test-output/
+qa-output/
+__pycache__/
+*.zip
