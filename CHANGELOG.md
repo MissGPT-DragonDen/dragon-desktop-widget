@@ -1,3 +1,15 @@
+# 1.1.2 — 关于署名 / About credits
+
+## 中文
+
+- 新增低调的“关于 / About”菜单入口；仅点击后显示版本与一行联合制作署名。
+- 主界面无新增水印、开屏提示或自动弹窗。保留v1.1.1手动预览修复、现有许可及所有功能。
+
+## English
+
+- Add a discreet About menu showing the version and a single co-creation credit only when opened.
+- No new watermark, startup notice or automatic dialog. Preserve v1.1.1 manual-preview behavior, licenses and all existing features.
+
 # 1.1.1 — 手动预览修复 / Manual preview fix
 
 ## 中文

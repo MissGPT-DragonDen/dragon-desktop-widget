@@ -434,6 +434,18 @@ Add-Menu (T '半身用量牌布局') {Open-PlacardLayout}
 $languageMenu=New-Object Windows.Controls.MenuItem;$languageMenu.Header='语言 / Language'
 foreach($entry in @(@('zh','中文'),@('en','English'))){$item=New-Object Windows.Controls.MenuItem;$item.Header=$entry[1];$item.Tag=$entry[0];$item.IsCheckable=$true;$item.IsChecked=$entry[0] -eq $script:state.Language;$item.Add_Click({param($sender,$e)Set-DragonLanguage $sender.Tag});$languageMenu.Items.Add($item)|Out-Null}
 $script:menu.Items.Add($languageMenu)|Out-Null
+function Show-DragonAbout {
+    $dialog=New-Object Windows.Window;$dialog.Title=(T '关于 / About');$dialog.Width=360;$dialog.Height=180
+    $dialog.Owner=$script:window;$dialog.WindowStartupLocation='CenterOwner';$dialog.ResizeMode='NoResize'
+    $dialog.Background=[Windows.Media.BrushConverter]::new().ConvertFromString('#FBF8FF')
+    $panel=New-Object Windows.Controls.StackPanel;$panel.Margin=20;$dialog.Content=$panel
+    $version=New-Object Windows.Controls.TextBlock;$version.Name='AboutVersion';$version.Text=(T '版本')+' 1.1.2';$version.FontSize=14;$panel.Children.Add($version)|Out-Null
+    $credit=New-Object Windows.Controls.TextBlock;$credit.Name='AboutCredit';$credit.Text=(T 'Reigiena × MissGPT 联合制作');$credit.FontSize=14;$credit.Margin='0,12,0,16';$credit.TextWrapping='Wrap';$panel.Children.Add($credit)|Out-Null
+    $close=New-Object Windows.Controls.Button;$close.Content=(T '关闭');$close.HorizontalAlignment='Right';$close.Padding='16,4';$close.Add_Click({$dialog.Close()});$panel.Children.Add($close)|Out-Null
+    $dialog.ShowDialog()|Out-Null
+}
+Add-Menu (T '关于 / About') {Show-DragonAbout}
+
 # Register original static text in Chinese even if the saved language is English.
 Refresh-UiNode $script:surface;Refresh-UiNode $script:menu;Refresh-UiNode $script:fullQuotaVisual
 Apply-State

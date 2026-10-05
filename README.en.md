@@ -2,7 +2,7 @@
 
 [中文说明](README.md)
 
-An **unofficial community project** by MissGPT-DragonDen, independent of and not endorsed by OpenAI. This Windows companion runs without an open ChatGPT webpage and is separate from the native ChatGPT pet project. **1.1.1 public** derives from accepted v8, adding bilingual UI, a separate public settings profile, and release cleanup; it is not an unchanged copy of v8.
+An **unofficial community project** by MissGPT-DragonDen, independent of and not endorsed by OpenAI. This Windows companion runs without an open ChatGPT webpage and is separate from the native ChatGPT pet project. **1.1.2 public** derives from accepted v8, adding bilingual UI, a separate public settings profile, and release cleanup; it is not an unchanged copy of v8.
 
 ## Run and recover
 
@@ -53,3 +53,8 @@ Preview percentages are explicitly synthetic QA values, not your account usage. 
 右键「台词与手动用量」输入0–100或「剩余 50%」，保存后立即进入明确标注的手动预览。0/19%流泪，20/49%慌张，50/100%屑笑。预览不代表账户剩余额度，没有真实重置时间；官方新查询暂停，已经在途的读取不会覆盖预览。预览值与官方缓存分开保存，重启仍保留预览模式。清空输入再保存、勾选「清除预览，恢复官方模式」或菜单「退出预览 / 恢复官方模式」可返回官方数据；原刷新开关与间隔随后生效。非法输入原地报错，保留当前状态。旧手动记录自动迁移为预览。
 
 Right-click Dialogue / manual usage, enter 0–100 or "Remaining 50%", then save. The widget immediately enters explicitly labeled manual preview: 0/19% tearful, 20/49% panic, 50/100% smug. Preview is not an account reading and has no actual reset time. New official queries pause; an in-flight result cannot replace preview. Preview and official snapshots are persisted separately, including across restart. Clear the input and save, select Clear preview and restore official mode, or choose Exit preview / restore official mode to resume the original refresh preference. Invalid input shows an inline error without changing state. Legacy manual readings migrate into preview.
+
+
+## 1.1.2 关于 / About
+
+A discreet About menu shows the version and co-creation credit only when opened. No new main-view watermark or startup notice. Existing features, licenses and data handling remain unchanged.

@@ -1,5 +1,10 @@
 ﻿$script:uiLanguage='zh'
 $script:translations=@{
+    '关于 / About'='About / 关于'
+    '版本'='Version'
+    'Reigiena × MissGPT 联合制作'='Created together by Reigiena × MissGPT'
+    '关闭'='Close'
+
     '台词与手动预览'='Dialogue and manual preview'
     '手动预览'='Manual preview'
     '手动预览：'='Manual preview: '

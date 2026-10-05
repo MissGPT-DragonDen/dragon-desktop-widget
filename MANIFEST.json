@@ -8,18 +8,18 @@
                   },
                   {
                       "path":  "I18n.ps1",
-                      "sha256":  "4af98e224f6be588749b89aecca8e4f971846bcc32717e7d5648579da312426a",
-                      "bytes":  10487
+                      "sha256":  "f1f00e043d79b3291ecfb7fce6a92911a64e1d72422959ff4aedde68c9ef34d3",
+                      "bytes":  10656
                   },
                   {
                       "path":  "README.en.md",
-                      "sha256":  "753922f690b71cb4da1bd8baa734919af5d4e4fcf91b5f51b8e1fd39682974f1",
-                      "bytes":  8098
+                      "sha256":  "9de1e52453cb958bce4202eaf7a1d9fad8ff789b4673a7424ed7933e04e61e6d",
+                      "bytes":  8321
                   },
                   {
                       "path":  "Dragon.ps1",
-                      "sha256":  "ab8658e2d658d5739775913d8660f0cd8f1555a756c21719e764708807edc903",
-                      "bytes":  42804
+                      "sha256":  "d56b181d06f9c1627dc7ea3ab3385d64f43a019d1d7b5ea7a59ec1c46fd74118",
+                      "bytes":  43949
                   },
                   {
                       "path":  "State.ps1",
@@ -103,8 +103,8 @@
                   },
                   {
                       "path":  "README.md",
-                      "sha256":  "4b805518c968859bc137759528a326653abfdbdc05a4851c41de5da13003c118",
-                      "bytes":  7838
+                      "sha256":  "456848b0ff1001268e5f83308d5c10a9dddfc3bba35e61575508c43ced64f3ca",
+                      "bytes":  8042
                   },
                   {
                       "path":  "PRIVACY.md",
@@ -133,8 +133,8 @@
                   },
                   {
                       "path":  "CHANGELOG.md",
-                      "sha256":  "70728f95242a190890a45312518849244326fe7bb777525b4cb71bb9dddcae1d",
-                      "bytes":  3892
+                      "sha256":  "557d7f2e6e98633e05b4ec7fd1bf734485f9046363dd4addfd8ece98a763dec9",
+                      "bytes":  4432
                   },
                   {
                       "path":  ".gitignore",
@@ -143,10 +143,10 @@
                   },
                   {
                       "path":  "Build.ps1",
-                      "sha256":  "9518cd39a5c1f129ef06f105d259b4db73b03c9f351ce2efb583c55d59823103",
+                      "sha256":  "ad802a521f10b451bf9accfb4cad3f3b5436ad7d42cfd6f4e65276e85803b980",
                       "bytes":  1963
                   }
               ],
     "codeLicense":  "0BSD",
-    "version":  "1.1.1"
+    "version":  "1.1.2"
 }
