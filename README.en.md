@@ -2,7 +2,7 @@
 
 [中文说明](README.md)
 
-An **unofficial community project** by MissGPT-DragonDen, independent of and not endorsed by OpenAI. This Windows companion runs without an open ChatGPT webpage and is separate from the native ChatGPT pet project. **1.1.0 public** derives from accepted v8, adding bilingual UI, a separate public settings profile, and release cleanup; it is not an unchanged copy of v8.
+An **unofficial community project** by MissGPT-DragonDen, independent of and not endorsed by OpenAI. This Windows companion runs without an open ChatGPT webpage and is separate from the native ChatGPT pet project. **1.1.1 public** derives from accepted v8, adding bilingual UI, a separate public settings profile, and release cleanup; it is not an unchanged copy of v8.
 
 ## Run and recover
 
@@ -39,10 +39,17 @@ Official references: [Codex App Server](https://developers.openai.com/codex/app-
 
 ## 1.1.0 三档表情 / Three expression tiers
 
-官方有效周剩余：≥50% 屑笑，20%–<50% 慌张，<20% 流泪。50%与20%的边界不含糊。读取失败、过期、未知或手动数据不触发新表情，保留上次有效状态并显示旧值标识。两种形象都有三张内置透明PNG；流泪半身抬高黑牌使用独立坐标，镜像只翻角色不翻文字。未配对的自定义角色继续显示原图。
+官方有效周剩余：≥50% 屑笑，20%–<50% 慌张，<20% 流泪。50%与20%的边界不含糊。读取失败、过期或未知的官方数据保留上次有效状态并显示旧值标识。明确标注的手动预览可独立测试各档，不更改官方表情状态。两种形象都有三张内置透明PNG；流泪半身抬高黑牌使用独立坐标，镜像只翻角色不翻文字。未配对的自定义角色继续显示原图。
 
-Fresh official weekly remaining selects smug (≥50%), panic (20%–<50%) or tearful (<20%). Invalid, unavailable, stale, manual or failed data never triggers a new expression; the last accepted expression stays with the existing stale marker. Both appearances bundle three RGBA images; the raised tearful placard uses a separate calibrated frame. Custom unpaired art remains unchanged. Updating preserves the public settings profile; the private candidate has a separate profile.
+Fresh official weekly remaining selects smug (≥50%), panic (20%–<50%) or tearful (<20%). Invalid, unavailable, stale or failed official data holds the last accepted expression with the existing stale marker. Explicitly labeled manual preview can independently test each tier without changing the accepted official mood. Both appearances bundle three RGBA images; the raised tearful placard uses a separate calibrated frame. Custom unpaired art remains unchanged. Updating preserves the public settings profile; the private candidate has a separate profile.
 
 验证预览中的75/35/10%是隔离测试值，不是用户额度；运行程序才经已登录的官方Codex只读状态刷新。新版本无需重新授权；无自启动注册、安装修改或实时账号查询用于测试。
 
 Preview percentages are explicitly synthetic QA values, not your account usage. Runtime retains the existing authenticated official Codex read-only mechanism. Tests did not query an account, register startup or modify the installed copy.
+
+
+## 1.1.1 手动预览修复 / Manual preview fix
+
+右键「台词与手动用量」输入0–100或「剩余 50%」，保存后立即进入明确标注的手动预览。0/19%流泪，20/49%慌张，50/100%屑笑。预览不代表账户剩余额度，没有真实重置时间；官方新查询暂停，已经在途的读取不会覆盖预览。预览值与官方缓存分开保存，重启仍保留预览模式。清空输入再保存、勾选「清除预览，恢复官方模式」或菜单「退出预览 / 恢复官方模式」可返回官方数据；原刷新开关与间隔随后生效。非法输入原地报错，保留当前状态。旧手动记录自动迁移为预览。
+
+Right-click Dialogue / manual usage, enter 0–100 or "Remaining 50%", then save. The widget immediately enters explicitly labeled manual preview: 0/19% tearful, 20/49% panic, 50/100% smug. Preview is not an account reading and has no actual reset time. New official queries pause; an in-flight result cannot replace preview. Preview and official snapshots are persisted separately, including across restart. Clear the input and save, select Clear preview and restore official mode, or choose Exit preview / restore official mode to resume the original refresh preference. Invalid input shows an inline error without changing state. Legacy manual readings migrate into preview.

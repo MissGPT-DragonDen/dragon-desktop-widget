@@ -2,6 +2,14 @@
 function Resolve-DragonExpression($Usage,[string]$Previous='smug',[bool]$ReadFailed=$false,[double]$RefreshMinutes=5,$Now=[DateTimeOffset]::UtcNow){
     if($Previous -notin @('smug','panic','tearful')){$Previous='smug'}
     $held=@{Mood=$Previous;Accepted=$false;Reason='unavailable'}
+    if((Get-DragonField $Usage 'Source') -eq 'manual-preview'){
+        $value=Get-DragonField $Usage 'Percent'
+        if($null -ne $value -and [Type]::GetTypeCode($value.GetType()).ToString() -in @('Byte','SByte','Int16','UInt16','Int32','UInt32','Int64','UInt64','Single','Double','Decimal')){
+            $percent=[double]$value
+            if(![double]::IsNaN($percent) -and ![double]::IsInfinity($percent) -and $percent -ge 0 -and $percent -le 100){return @{Mood=$(if($percent -lt 20){'tearful'}elseif($percent -lt 50){'panic'}else{'smug'});Accepted=$false;Reason='manual-preview'}}
+        }
+        return $held
+    }
     if($ReadFailed){$held.Reason='read-failed';return $held}
     if($null -eq $Usage -or (Get-DragonField $Usage 'Source') -ne 'official-codex'){return $held}
     try{

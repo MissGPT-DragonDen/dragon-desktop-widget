@@ -1,3 +1,19 @@
+# 1.1.1 — 手动预览修复 / Manual preview fix
+
+## 中文
+
+- 修复手动输入保存成功但角色仍显示暂不可用的问题；两种形象立即显示明确标记的预览百分比并测试三档表情。
+- 手动预览与官方缓存分别保存，暂停新查询；在途刷新成功或失败不会覆盖预览。
+- 清空输入、清除预览或恢复官方菜单可退出预览，恢复原刷新设置；不生成预览重置时间。
+- 保留v1.1.0发布文档的六张美术说明和双语更新日志；不修改已安装版本或用户设置。
+
+## English
+
+- Fix saved manual percentages showing unavailable on character surfaces; both appearances immediately show an explicit preview and its expression tier.
+- Persist preview separately from official snapshots, pause new queries, and prevent in-flight success/failure from replacing preview.
+- Clear input/preview or restore official mode to resume previous refresh preferences; preview never invents a reset time.
+- Preserve the published v1.1.0 six-asset description and bilingual changelog. No installed-copy/settings changes.
+
 # 1.1.0 — 三档表情 / Three expression tiers
 
 ## 中文

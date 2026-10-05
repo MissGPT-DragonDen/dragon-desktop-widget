@@ -6,6 +6,7 @@
     return @{Left=$left+$x*$w;Top=$top+$p.Y*$h;Width=$p.Width*$w;Height=$p.Height*$h}
 }
 function Get-DragonResetLabel($Usage,$Now=[DateTimeOffset]::UtcNow){
+    if($null -ne $Usage -and $Usage.Source -eq 'manual-preview'){return (T '无真实重置时间')}
     if($null -eq $Usage -or $Usage.Source -ne 'official-codex'){return (T '重置时间：不可用')}
     $reset=[DateTimeOffset]::FromUnixTimeSeconds($Usage.ResetAt)
     if($reset -le $Now){return (T '已到重置时间 · 待读取')}

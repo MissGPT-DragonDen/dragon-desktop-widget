@@ -1,152 +1,152 @@
 ﻿{
-  "assetLicense": "CC0-1.0 (our rights only)",
-  "files": [
-    {
-      "path": "Expression.ps1",
-      "sha256": "d510c24c8092583c8b50e77ee5a589087a2fa12ddb4242c9dfa657813849ee5a",
-      "bytes": 2536
-    },
-    {
-      "path": "I18n.ps1",
-      "sha256": "010086389225d1b83085800de042292bebcfd64fc638405ac8bdf1cc8f9f558f",
-      "bytes": 9097
-    },
-    {
-      "path": "README.en.md",
-      "sha256": "2f72b94757b3a8b3f9f5d12e62fcf1ce22aac6d38edfabebee977000af8befef",
-      "bytes": 6590
-    },
-    {
-      "path": "Dragon.ps1",
-      "sha256": "b7baa6fe5c6c461b3e7898a5c01b9013ab3ee0ebb840a673e01db8393dd0716f",
-      "bytes": 40692
-    },
-    {
-      "path": "State.ps1",
-      "sha256": "c10acceb2153d88bf451a837b80a68fa6eb1804f31707b071ed7dc9276583709",
-      "bytes": 9551
-    },
-    {
-      "path": "Quota.ps1",
-      "sha256": "3ece4796720eced36fa4d6ab763bf8c4e5c49b28208529ede79dda59112a43fb",
-      "bytes": 4640
-    },
-    {
-      "path": "Placard.ps1",
-      "sha256": "113b9501191383a4b20ebf47e168c2150e1c641c0f24834597574c3eacd08c9e",
-      "bytes": 3516
-    },
-    {
-      "path": "Startup.ps1",
-      "sha256": "cdbaaf9d5d62d93e928ba53a6b7de22c83035c946c9343c9463e557cbd14625e",
-      "bytes": 3174
-    },
-    {
-      "path": "DisableAutoStart.ps1",
-      "sha256": "6d3f4faf8eebbd4949d5f6e5fd23533951f1b4e9b0b7e9463438242d5637dffd",
-      "bytes": 354
-    },
-    {
-      "path": "Start.vbs",
-      "sha256": "3e048c74a5eda985789cbf04b9f4c8372c709b8828be55503db7bdc3e30ab322",
-      "bytes": 352
-    },
-    {
-      "path": "Start.cmd",
-      "sha256": "f711bde4d79c8593d6f5d0477a0e5c14679130f1ec9692f12330202cccfce8a3",
-      "bytes": 242
-    },
-    {
-      "path": "Diagnostic.cmd",
-      "sha256": "f432cdf939033c66319ebd1bae412a9786b6e239781b6eb64420505f7cd27f24",
-      "bytes": 227
-    },
-    {
-      "path": "Restore.cmd",
-      "sha256": "784d8b518c006badcecbfba48baf050df8c78b28e8f2d8d3abf9d6c23a2945b8",
-      "bytes": 196
-    },
-    {
-      "path": "DisableAutoStart.cmd",
-      "sha256": "83a56781f3eac6f45e4380a4b9390c7352b3f1bf5ee037ae3a621c49ce649562",
-      "bytes": 108
-    },
-    {
-      "path": "assets/smug-full.png",
-      "sha256": "d0627620affbc2d6215d488586cf03030441582169fe88f9ea8f28082df556a0",
-      "bytes": 1416955
-    },
-    {
-      "path": "assets/smug-halfbody-placard.png",
-      "sha256": "da5f9561f15bb43698c4a014ae520848432d7d7473ae1eeff97cda9d40f35747",
-      "bytes": 1824545
-    },
-    {
-      "path": "assets/full-low-quota.png",
-      "sha256": "082a0a35a84efdce85ed6c43ab94f0ecc7871b6adabd75d79bb7beeb86e18411",
-      "bytes": 1417008
-    },
-    {
-      "path": "assets/bust-low-quota.png",
-      "sha256": "51267fcd042587cfb020625d6230bade82a29cc456acdc4d147bd3b317a849b5",
-      "bytes": 1838283
-    },
-    {
-      "path": "assets/full-tearful.png",
-      "sha256": "b84b0333f228141f763825162f4884820593a0070d67edc0c413f01935fbf509",
-      "bytes": 1471441
-    },
-    {
-      "path": "assets/bust-tearful.png",
-      "sha256": "c8e0003526228669d3dc54e4760d8c3141ce7ab2d0614cc60dc5ef1996649076",
-      "bytes": 1809344
-    },
-    {
-      "path": "README.md",
-      "sha256": "a15d8017c7659202d0982068a4befe98cc7d316c2e91b5a22db33e0a9b46a94d",
-      "bytes": 6330
-    },
-    {
-      "path": "PRIVACY.md",
-      "sha256": "7e2fc68d8c1d716f5f078ca333a9a6e51770a17ed5181dafba7a16d0769d4bb7",
-      "bytes": 3801
-    },
-    {
-      "path": "LICENSE",
-      "sha256": "13f64b5bb0902d494c293bb3c19625831bfd648f2c6cc7399d87178f604686a2",
-      "bytes": 676
-    },
-    {
-      "path": "NOTICE.md",
-      "sha256": "14250e332355c37652853ca6d9458e378050a6d91841fd2033a6698e9b8e642a",
-      "bytes": 2074
-    },
-    {
-      "path": "ASSET_RIGHTS.md",
-      "sha256": "a14ba826fc940b695175aa3c985ffa554cffce70ad71b4177c83a576f28f0a86",
-      "bytes": 2733
-    },
-    {
-      "path": "assets/LICENSE.txt",
-      "sha256": "005d07b112be20f15f2e31ed9c514c61879028969772873aef3a942ebca26382",
-      "bytes": 973
-    },
-    {
-      "path": "CHANGELOG.md",
-      "sha256": "0267325aecbca95f860c52f1d1ecd39f4431c5315cb51ab4341447c5ac3780d1",
-      "bytes": 2771
-    },
-    {
-      "path": ".gitignore",
-      "sha256": "4dac40086a484554af690f4cf5d1d8f8d6c322a57d15d2669dacdc5ef6b881db",
-      "bytes": 101
-    },
-    {
-      "path": "Build.ps1",
-      "sha256": "74a54779684adbe08c1e1a74b4678395efad1a3e0ace5f4b81f29f11f082fc20",
-      "bytes": 1963
-    }
-  ],
-  "codeLicense": "0BSD",
-  "version": "1.1.0"
+    "assetLicense":  "CC0-1.0 (our rights only)",
+    "files":  [
+                  {
+                      "path":  "Expression.ps1",
+                      "sha256":  "76ebad10785051898b99ce54253bc216a3a21e4b2470254ed52d898961582f7f",
+                      "bytes":  3170
+                  },
+                  {
+                      "path":  "I18n.ps1",
+                      "sha256":  "4af98e224f6be588749b89aecca8e4f971846bcc32717e7d5648579da312426a",
+                      "bytes":  10487
+                  },
+                  {
+                      "path":  "README.en.md",
+                      "sha256":  "753922f690b71cb4da1bd8baa734919af5d4e4fcf91b5f51b8e1fd39682974f1",
+                      "bytes":  8098
+                  },
+                  {
+                      "path":  "Dragon.ps1",
+                      "sha256":  "ab8658e2d658d5739775913d8660f0cd8f1555a756c21719e764708807edc903",
+                      "bytes":  42804
+                  },
+                  {
+                      "path":  "State.ps1",
+                      "sha256":  "3ab99c2227b5e55f1752f3d4f5b6e787e880fb197d14e2ee6c6ade6e31112766",
+                      "bytes":  11632
+                  },
+                  {
+                      "path":  "Quota.ps1",
+                      "sha256":  "3ece4796720eced36fa4d6ab763bf8c4e5c49b28208529ede79dda59112a43fb",
+                      "bytes":  4640
+                  },
+                  {
+                      "path":  "Placard.ps1",
+                      "sha256":  "80f12b8b07aeaccaed2dcacb501a0d03f4f29931183ec2b6e7c7af464280396d",
+                      "bytes":  3618
+                  },
+                  {
+                      "path":  "Startup.ps1",
+                      "sha256":  "cdbaaf9d5d62d93e928ba53a6b7de22c83035c946c9343c9463e557cbd14625e",
+                      "bytes":  3174
+                  },
+                  {
+                      "path":  "DisableAutoStart.ps1",
+                      "sha256":  "6d3f4faf8eebbd4949d5f6e5fd23533951f1b4e9b0b7e9463438242d5637dffd",
+                      "bytes":  354
+                  },
+                  {
+                      "path":  "Start.vbs",
+                      "sha256":  "c49965468db569953da16cdbe81a77876cc817940f105c5d1f775d9c230b3eab",
+                      "bytes":  359
+                  },
+                  {
+                      "path":  "Start.cmd",
+                      "sha256":  "6a2c12df71b3220ddbf5bd11c77b045e716ddfe2ab0ca86309b021299cbd5c8b",
+                      "bytes":  246
+                  },
+                  {
+                      "path":  "Diagnostic.cmd",
+                      "sha256":  "60bd886d9958593142abb06ad4df91091bbd079f02558f772b16a99348d84592",
+                      "bytes":  231
+                  },
+                  {
+                      "path":  "Restore.cmd",
+                      "sha256":  "1eb3a4b3b3829ce344fa221a516cdddb42ebe46b515723c27494410e7ee114b7",
+                      "bytes":  199
+                  },
+                  {
+                      "path":  "DisableAutoStart.cmd",
+                      "sha256":  "d742d126546ed517afd8ee4a689bfed308c54db8e7f2d06297f03c6ac6b9eb22",
+                      "bytes":  111
+                  },
+                  {
+                      "path":  "assets/smug-full.png",
+                      "sha256":  "d0627620affbc2d6215d488586cf03030441582169fe88f9ea8f28082df556a0",
+                      "bytes":  1416955
+                  },
+                  {
+                      "path":  "assets/smug-halfbody-placard.png",
+                      "sha256":  "da5f9561f15bb43698c4a014ae520848432d7d7473ae1eeff97cda9d40f35747",
+                      "bytes":  1824545
+                  },
+                  {
+                      "path":  "assets/full-low-quota.png",
+                      "sha256":  "082a0a35a84efdce85ed6c43ab94f0ecc7871b6adabd75d79bb7beeb86e18411",
+                      "bytes":  1417008
+                  },
+                  {
+                      "path":  "assets/bust-low-quota.png",
+                      "sha256":  "51267fcd042587cfb020625d6230bade82a29cc456acdc4d147bd3b317a849b5",
+                      "bytes":  1838283
+                  },
+                  {
+                      "path":  "assets/full-tearful.png",
+                      "sha256":  "b84b0333f228141f763825162f4884820593a0070d67edc0c413f01935fbf509",
+                      "bytes":  1471441
+                  },
+                  {
+                      "path":  "assets/bust-tearful.png",
+                      "sha256":  "c8e0003526228669d3dc54e4760d8c3141ce7ab2d0614cc60dc5ef1996649076",
+                      "bytes":  1809344
+                  },
+                  {
+                      "path":  "README.md",
+                      "sha256":  "4b805518c968859bc137759528a326653abfdbdc05a4851c41de5da13003c118",
+                      "bytes":  7838
+                  },
+                  {
+                      "path":  "PRIVACY.md",
+                      "sha256":  "41a745c55e0a71b85d9cd5c61f04bd515d1e44abd81e0be9134c01cf1c7878df",
+                      "bytes":  4493
+                  },
+                  {
+                      "path":  "LICENSE",
+                      "sha256":  "13f64b5bb0902d494c293bb3c19625831bfd648f2c6cc7399d87178f604686a2",
+                      "bytes":  676
+                  },
+                  {
+                      "path":  "NOTICE.md",
+                      "sha256":  "14250e332355c37652853ca6d9458e378050a6d91841fd2033a6698e9b8e642a",
+                      "bytes":  2074
+                  },
+                  {
+                      "path":  "ASSET_RIGHTS.md",
+                      "sha256":  "a14ba826fc940b695175aa3c985ffa554cffce70ad71b4177c83a576f28f0a86",
+                      "bytes":  2733
+                  },
+                  {
+                      "path":  "assets/LICENSE.txt",
+                      "sha256":  "005d07b112be20f15f2e31ed9c514c61879028969772873aef3a942ebca26382",
+                      "bytes":  973
+                  },
+                  {
+                      "path":  "CHANGELOG.md",
+                      "sha256":  "70728f95242a190890a45312518849244326fe7bb777525b4cb71bb9dddcae1d",
+                      "bytes":  3892
+                  },
+                  {
+                      "path":  ".gitignore",
+                      "sha256":  "4dac40086a484554af690f4cf5d1d8f8d6c322a57d15d2669dacdc5ef6b881db",
+                      "bytes":  101
+                  },
+                  {
+                      "path":  "Build.ps1",
+                      "sha256":  "9518cd39a5c1f129ef06f105d259b4db73b03c9f351ce2efb583c55d59823103",
+                      "bytes":  1963
+                  }
+              ],
+    "codeLicense":  "0BSD",
+    "version":  "1.1.1"
 }

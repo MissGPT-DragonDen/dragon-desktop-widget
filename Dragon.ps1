@@ -43,7 +43,7 @@ function Save-State {
   </Grid>
   <Canvas x:Name="PlacardCanvas" Visibility="Collapsed">
    <Border x:Name="QuotaPlacard" Background="#9914131A" BorderBrush="Transparent" BorderThickness="0" CornerRadius="2" Cursor="Hand">
-    <Viewbox Stretch="Uniform"><StackPanel Width="240" Margin="4,1" TextElement.FontFamily="Segoe UI, Microsoft YaHei UI"><TextBlock Text="每周限额" Foreground="#DDD4E7" FontSize="16" HorizontalAlignment="Center"/><TextBlock x:Name="PlacardPercent" Text="待读取" Foreground="White" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/><TextBlock x:Name="PlacardReset" Foreground="#D5CFDF" FontSize="18" TextAlignment="Center"/><TextBlock x:Name="PlacardStatus" Foreground="#B2A5CA" FontSize="11" TextAlignment="Center"/></StackPanel></Viewbox>
+    <Viewbox Stretch="Uniform"><StackPanel Width="240" Margin="4,1" TextElement.FontFamily="Segoe UI, Microsoft YaHei UI"><TextBlock x:Name="PlacardHeading" Text="每周限额" Foreground="#DDD4E7" FontSize="16" HorizontalAlignment="Center"/><TextBlock x:Name="PlacardPercent" Text="待读取" Foreground="White" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/><TextBlock x:Name="PlacardReset" Foreground="#D5CFDF" FontSize="18" TextAlignment="Center"/><TextBlock x:Name="PlacardStatus" Foreground="#B2A5CA" FontSize="11" TextAlignment="Center"/></StackPanel></Viewbox>
    </Border>
   </Canvas>
   <Border x:Name="QuotaBadgeBorder" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#EFFFFFFF" CornerRadius="6" Padding="5,2" IsHitTestVisible="False"><TextBlock x:Name="QuotaBadge" Text="周限额：待读取" FontSize="12" Foreground="#493363"/></Border>
@@ -64,7 +64,7 @@ $script:bubbleTimer=New-Object Windows.Threading.DispatcherTimer;$script:bubbleT
 [xml]$quotaBubbleXaml=(T @'
 <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="FullQuotaSurface" Background="Transparent">
  <Border x:Name="BubbleBody" Background="#FFF9F5FF" BorderBrush="#B69BD6" BorderThickness="1.5" CornerRadius="18" Padding="12,8">
-  <Viewbox Stretch="Uniform"><StackPanel Width="220" TextElement.FontFamily="Segoe UI, Microsoft YaHei UI"><TextBlock Text="每周限额" Foreground="#796189" FontSize="14"/><TextBlock x:Name="FullPercent" Foreground="#50386D" FontSize="34" FontWeight="SemiBold"/><TextBlock x:Name="FullReset" Foreground="#735E85" FontSize="13"/><TextBlock x:Name="FullStatus" Foreground="#987CA6" FontSize="11"/></StackPanel></Viewbox>
+  <Viewbox Stretch="Uniform"><StackPanel Width="220" TextElement.FontFamily="Segoe UI, Microsoft YaHei UI"><TextBlock x:Name="FullHeading" Text="每周限额" Foreground="#796189" FontSize="14"/><TextBlock x:Name="FullPercent" Foreground="#50386D" FontSize="34" FontWeight="SemiBold"/><TextBlock x:Name="FullReset" Foreground="#735E85" FontSize="13"/><TextBlock x:Name="FullStatus" Foreground="#987CA6" FontSize="11"/></StackPanel></Viewbox>
  </Border>
  <Path x:Name="BubbleTail" Data="M0,0 L14,0 L0,10 Z" Fill="#FFF9F5FF" Stroke="#B69BD6" StrokeThickness="1"/>
 </Canvas>
@@ -107,7 +107,7 @@ function Apply-State {
     Update-FullQuotaBubble
 }
 function Update-ExpressionImage {
-    $choice=Resolve-DragonExpression $script:state.Usage $script:state.LastQuotaExpression $script:quotaFailed $script:state.RefreshMinutes
+    $choice=Resolve-DragonExpression (Get-DragonDisplayUsage $script:state) $script:state.LastQuotaExpression $script:quotaFailed $script:state.RefreshMinutes
     if($choice.Accepted){$script:state.LastQuotaExpression=$choice.Mood}
     $slot=$script:state.Appearance;$normal=$script:state.Images[$slot]
     $customLow=if($choice.Mood -eq 'tearful'){$script:state.TearfulImages[$slot]}else{$script:state.LowImages[$slot]}
@@ -222,6 +222,20 @@ $script:surface.Add_MouseLeftButtonUp({Release-Pet $false});$script:surface.Add_
 $script:window.Add_KeyDown({param($sender,$e)
     switch($e.Key){'Escape'{$script:bubble.IsOpen=$false;$script:menu.IsOpen=$false};'Left'{$script:window.Left-=12;Remember-Position};'Right'{$script:window.Left+=12;Remember-Position};'Up'{$script:window.Top-=12;Remember-Position};'Down'{$script:window.Top+=12;Remember-Position};'Space'{Speak}}
 })
+function Save-DragonSettingsInput([string]$LinesText,[bool]$Random,[string]$PreviewText,[bool]$ClearPreview){
+    # Parse first: invalid input cannot partially alter state or close the dialog.
+    $reading=$null;if(!$ClearPreview -and $PreviewText.Trim()){$reading=Read-ManualUsage $PreviewText}
+    $wasPreview=$script:state.UsageMode -eq 'manual-preview'
+    $script:state.Lines=@($LinesText -split '\r?\n');$script:state.Mode=if($Random){'random'}else{'sequence'}
+    if($ClearPreview -or ($wasPreview -and !$PreviewText.Trim())){$script:state.ManualUsage=$null;$script:state.UsageMode='official'}
+    elseif($null -ne $reading){$script:state.ManualUsage=$reading;$script:state.UsageMode='manual-preview'}
+    $script:state=Convert-DragonState $script:state;$script:lineIndex=0
+    if($wasPreview -and $script:state.UsageMode -eq 'official'){$script:nextQuotaRead=[DateTime]::UtcNow}
+    Update-QuotaBadge;Save-State
+}
+function Restore-OfficialUsage {
+    $script:state.ManualUsage=$null;$script:state.UsageMode='official';$script:nextQuotaRead=[DateTime]::UtcNow;Update-QuotaBadge;Save-State
+}
 function Open-Settings {
     $dialog=New-Object Windows.Window;$dialog.Title=(T '台词与手动用量 · 无自动读取');$dialog.Width=430;$dialog.Height=520;$dialog.Owner=$script:window;$dialog.WindowStartupLocation='CenterOwner';$dialog.ResizeMode='NoResize'
     $panel=New-Object Windows.Controls.StackPanel;$panel.Margin=18;$dialog.Content=$panel
@@ -230,17 +244,14 @@ function Open-Settings {
     $lines=New-Object Windows.Controls.TextBox;$lines.AcceptsReturn=$true;$lines.Height=130;$lines.VerticalScrollBarVisibility='Auto';$lines.Text=$script:state.Lines -join "`r`n";$panel.Children.Add($lines)|Out-Null
     $random=New-Object Windows.Controls.CheckBox;$random.Content=(T '随机台词');$random.IsChecked=$script:state.Mode -eq 'random';$random.Margin='0,8,0,8';$panel.Children.Add($random)|Out-Null
     Label (T '手动输入0–100，或主动粘贴“剩余 50%”片段。不是实时查询。留空不更新记录。')
-    $percent=New-Object Windows.Controls.TextBox;$percent.MaxLength=100;$panel.Children.Add($percent)|Out-Null
-    $clear=New-Object Windows.Controls.CheckBox;$clear.Content=(T '清除手动用量记录');$clear.Margin='0,8,0,8';$panel.Children.Add($clear)|Out-Null
+    $percent=New-Object Windows.Controls.TextBox;$percent.MaxLength=100;if($script:state.UsageMode -eq 'manual-preview'){$percent.Text=$script:state.ManualUsage.Percent.ToString([Globalization.CultureInfo]::InvariantCulture)};$panel.Children.Add($percent)|Out-Null
+    $clear=New-Object Windows.Controls.CheckBox;$clear.Content=(T '清除预览，恢复官方模式');$clear.Margin='0,8,0,8';$panel.Children.Add($clear)|Out-Null
     Label (T '来源与时间始终标注；30分钟后显示过期。未接入自动来源。不读取屏幕、账号或聊天。')
     $errorLabel=New-Object Windows.Controls.TextBlock;$errorLabel.Foreground=[Windows.Media.Brushes]::Firebrick;$panel.Children.Add($errorLabel)|Out-Null
     $save=New-Object Windows.Controls.Button;$save.Content=(T '保存');$save.Margin='0,8,0,0';$save.Padding=8;$panel.Children.Add($save)|Out-Null
     $save.Add_Click({
-      $reading=$null
-      if($percent.Text.Trim() -and (!$clear.IsChecked)){try{$reading=Read-ManualUsage $percent.Text}catch{$errorLabel.Text=$_.Exception.Message;return}}
-      $script:state.Lines=@($lines.Text -split '\r?\n');$script:state.Mode=if($random.IsChecked){'random'}else{'sequence'}
-      if($clear.IsChecked){$script:state.Usage=$null}elseif($null -ne $reading){$script:state.Usage=$reading}
-      $script:state=Convert-DragonState $script:state;$script:lineIndex=0;Save-State;$dialog.Close()
+      try{Save-DragonSettingsInput $lines.Text ([bool]$random.IsChecked) $percent.Text ([bool]$clear.IsChecked)}catch{$errorLabel.Text=$_.Exception.Message;return}
+      $dialog.Close()
     });$dialog.ShowDialog()|Out-Null
 }
 $script:window.Add_Closed({$script:bubbleTimer.Stop();$script:holdTimer.Stop()})
@@ -256,10 +267,11 @@ $script:restoreTimer.Add_Tick({
 $script:quotaWorker=$null;$script:quotaCancellation=$null;$script:quotaFailed=$false;$script:nextQuotaRead=[DateTime]::UtcNow
 function Show-QuotaDetails {
     $message=Get-DragonUsage $script:state
-    if($script:quotaFailed){$message=(T '上次官方刷新失败；保留旧读数。')+[Environment]::NewLine+$message}
+    if($script:quotaFailed -and $script:state.UsageMode -ne 'manual-preview'){$message=(T '上次官方刷新失败；保留旧读数。')+[Environment]::NewLine+$message}
     $mode=if($script:state.AutoRefresh){(T "每$($script:state.RefreshMinutes)分钟自动刷新")}else{(T '自动刷新已关闭')}
-    if($script:quotaWorker){$mode+=(T ' · 正在读取')}
-    if($null -ne $script:state.Usage -and $script:state.Usage.Source -eq 'official-codex'){$countdown=(Get-DragonResetLabel $script:state.Usage) -split "`n";$mode+=[Environment]::NewLine+$countdown[-1]}
+    if($script:state.UsageMode -eq 'manual-preview'){$mode=(T '手动预览：官方查询已暂停')}
+    if($script:quotaWorker -and $script:state.UsageMode -ne 'manual-preview'){$mode+=(T ' · 正在读取')}
+    if($script:state.UsageMode -ne 'manual-preview' -and $null -ne $script:state.Usage -and $script:state.Usage.Source -eq 'official-codex'){$countdown=(Get-DragonResetLabel $script:state.Usage) -split "`n";$mode+=[Environment]::NewLine+$countdown[-1]}
     Show-Bubble ($message+[Environment]::NewLine+$mode)
 }
 function Update-Placard {
@@ -273,14 +285,16 @@ function Update-Placard {
     $rect=Get-DragonExpressionPlacardRect $script:state $pw $ph $script:renderedExpression;$panel=Find 'QuotaPlacard'
     if($null -eq $rect){(Find 'PlacardCanvas').Visibility='Collapsed';(Find 'QuotaBadgeBorder').Visibility='Visible';return}
     [Windows.Controls.Canvas]::SetLeft($panel,$rect.Left);[Windows.Controls.Canvas]::SetTop($panel,$rect.Top);$panel.Width=$rect.Width;$panel.Height=$rect.Height
-    $u=$script:state.Usage
+    $u=Get-DragonDisplayUsage $script:state
     $official=$null -ne $u -and $u.Source -eq 'official-codex'
-    (Find 'PlacardPercent').Text=if($official){(T "剩余 $($u.Percent)%")}else{(T '暂不可用')}
+    $preview=$null -ne $u -and $u.Source -eq 'manual-preview'
+    (Find 'PlacardHeading').Text=if($preview){(T '手动预览')}else{(T '每周限额')}
+    (Find 'PlacardPercent').Text=if($preview){"$($u.Percent)%"}elseif($official){(T "剩余 $($u.Percent)%")}else{(T '暂不可用')}
     (Find 'PlacardReset').Text=((Get-DragonResetLabel $u) -split "`n")[0]
     (Find 'QuotaPlacard').ToolTip=(Get-DragonResetLabel $u)+(T ' · 点击展开官方来源')
     $old=$official -and ($script:quotaFailed -or ([DateTimeOffset]::UtcNow-[DateTimeOffset]::Parse($u.ReadAt)).TotalMinutes -gt ($script:state.RefreshMinutes+1) -or [DateTimeOffset]::UtcNow.ToUnixTimeSeconds() -ge $u.ResetAt)
-    (Find 'PlacardStatus').Visibility=if($script:quotaWorker -or $old){'Visible'}else{'Collapsed'}
-    (Find 'PlacardStatus').Text=if($script:quotaWorker){(T '刷新中 · 点击查看来源')}elseif($old){(T '旧值 · 点击查看刷新状态')}else{(T '点击查看来源 / 刷新状态')}
+    (Find 'PlacardStatus').Visibility=if($preview -or $script:quotaWorker -or $old){'Visible'}else{'Collapsed'}
+    (Find 'PlacardStatus').Text=if($preview){(T '官方刷新已暂停')}elseif($script:quotaWorker){(T '刷新中 · 点击查看来源')}elseif($old){(T '旧值 · 点击查看刷新状态')}else{(T '点击查看来源 / 刷新状态')}
 }
 (Find 'QuotaPlacard').Add_MouseLeftButtonDown({param($sender,$e) $e.Handled=$true})
 (Find 'QuotaPlacard').Add_MouseLeftButtonUp({param($sender,$e) $e.Handled=$true;Show-QuotaDetails})
@@ -298,11 +312,13 @@ function Update-FullQuotaBubble {
     $show=$script:state.Appearance -eq 'full' -and $script:window.IsVisible -and $script:window.WindowState -eq 'Normal'
     if(!$show){$script:fullQuotaPopup.IsOpen=$false;return}
     if($null -eq [Windows.PresentationSource]::FromVisual($script:surface)){return}
-    $u=$script:state.Usage;$official=$null -ne $u -and $u.Source -eq 'official-codex'
-    $script:fullQuotaVisual.FindName('FullPercent').Text=if($official){(T "剩余 $($u.Percent)%")}else{(T '暂不可用')}
+    $u=Get-DragonDisplayUsage $script:state;$official=$null -ne $u -and $u.Source -eq 'official-codex'
+    $preview=$null -ne $u -and $u.Source -eq 'manual-preview'
+    $script:fullQuotaVisual.FindName('FullHeading').Text=if($preview){(T '手动预览')}else{(T '每周限额')}
+    $script:fullQuotaVisual.FindName('FullPercent').Text=if($preview){"$($u.Percent)%"}elseif($official){(T "剩余 $($u.Percent)%")}else{(T '暂不可用')}
     $script:fullQuotaVisual.FindName('FullReset').Text=Get-DragonResetLabel $u
     $old=$official -and ($script:quotaFailed -or ([DateTimeOffset]::UtcNow-[DateTimeOffset]::Parse($u.ReadAt)).TotalMinutes -gt ($script:state.RefreshMinutes+1) -or [DateTimeOffset]::UtcNow.ToUnixTimeSeconds() -ge $u.ResetAt)
-    $script:fullQuotaVisual.FindName('FullStatus').Text=if($script:quotaWorker){(T '刷新中 · 点击展开')}elseif($old){(T '旧值 · 点击查看状态')}else{(T '点击查看来源 / 更新时间')}
+    $script:fullQuotaVisual.FindName('FullStatus').Text=if($preview){(T '官方刷新已暂停')}elseif($script:quotaWorker){(T '刷新中 · 点击展开')}elseif($old){(T '旧值 · 点击查看状态')}else{(T '点击查看来源 / 更新时间')}
     Position-FullQuotaBubble
     # A resized Popup can retain its preceding measured bounds until WPF renders.
     # Reposition once afterwards so native edge avoidance does not use stale width.
@@ -342,17 +358,19 @@ function Position-FullQuotaBubble {
 
 }
 function Update-QuotaBadge {
+    if($null -ne (Get-Variable refreshItem -Scope Script -ErrorAction SilentlyContinue)){$refreshItem.IsEnabled=$script:state.UsageMode -ne 'manual-preview'}
     Update-ExpressionImage
     Update-Placard
     Update-FullQuotaBubble
     $label=Find 'QuotaBadge'
-    if($null -eq $script:state.Usage){$label.Text=if($script:quotaFailed){(T '周限额：读取失败')}else{(T '周限额：待读取')};return}
-    $u=$script:state.Usage
-    if($u.Source -ne 'official-codex'){$label.Text=(T "手动剩余：$($u.Percent)%");return}
+    if($null -eq (Get-DragonDisplayUsage $script:state)){$label.Text=if($script:quotaFailed){(T '周限额：读取失败')}else{(T '周限额：待读取')};return}
+    $u=Get-DragonDisplayUsage $script:state
+    if($u.Source -eq 'manual-preview'){$label.Text=(T "手动预览：$($u.Percent)%");return}
     $old=$script:quotaFailed -or ([DateTimeOffset]::UtcNow-[DateTimeOffset]::Parse($u.ReadAt)).TotalMinutes -gt ($script:state.RefreshMinutes+1) -or [DateTimeOffset]::UtcNow.ToUnixTimeSeconds() -ge $u.ResetAt
     $suffix=if($old){(T ' · 旧值')}else{''};$label.Text=(T "周剩余：$($u.Percent)%$suffix")
 }
 function Start-QuotaRefresh {
+    if($script:state.UsageMode -eq 'manual-preview'){return}
     if($null -ne $script:quotaWorker){return}
     $script:quotaWorker=[PowerShell]::Create()
     $script:quotaCancellation=New-Object Threading.CancellationTokenSource
@@ -372,7 +390,7 @@ $script:quotaTimer.Add_Tick({
         finally{$script:quotaWorker.Dispose();$script:quotaWorker=$null;if($script:quotaCancellation){$script:quotaCancellation.Dispose();$script:quotaCancellation=$null}}
     }
     Update-QuotaBadge
-    if($script:state.AutoRefresh -and [DateTime]::UtcNow -ge $script:nextQuotaRead){Start-QuotaRefresh}
+    if($script:state.UsageMode -ne 'manual-preview' -and $script:state.AutoRefresh -and [DateTime]::UtcNow -ge $script:nextQuotaRead){Start-QuotaRefresh}
 })
 $script:window.Add_Closed({$script:quotaTimer.Stop();if($script:quotaWorker){if($script:quotaCancellation){$script:quotaCancellation.Cancel()};try{$script:quotaWorker.Stop()}finally{$script:quotaWorker.Dispose();$script:quotaWorker=$null;if($script:quotaCancellation){$script:quotaCancellation.Dispose();$script:quotaCancellation=$null}}}})
 # Real WinForms NotifyIcon shares this STA message pump with WPF.

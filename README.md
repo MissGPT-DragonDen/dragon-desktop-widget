@@ -2,7 +2,7 @@
 
 An unofficial community Windows desktop companion by MissGPT-DragonDen. Not affiliated with or endorsed by OpenAI. Our code and documentation use 0BSD; our rights in the six listed project-generated artworks are contributed under CC0-1.0. No attribution is required for our contributions.
 
-这是**非官方社区作品**，独立 Windows 桌面程序，不需要打开 ChatGPT 网页，与 ChatGPT 原生宠物项目分开。当前公开准备版本 **1.1.0 public**：基于已验收 v8，新增双语 UI、独立公开版配置及发布清理；不是未经修改的原版。
+这是**非官方社区作品**，独立 Windows 桌面程序，不需要打开 ChatGPT 网页，与 ChatGPT 原生宠物项目分开。当前公开准备版本 **1.1.1 public**：基于已验收 v8，新增双语 UI、独立公开版配置及发布清理；不是未经修改的原版。
 
 [English documentation](README.en.md)
 
@@ -20,7 +20,7 @@ An unofficial community Windows desktop companion by MissGPT-DragonDen. Not affi
 
 通过官方 Codex `app-server --stdio` 的文档化 `account/rateLimits/read`，复用该客户端自己的既有登录，读取 `codex` 桶唯一的 10080 分钟周窗口。剩余百分比为 `100-usedPercent`，重置时间使用官方 `resetsAt` 秒级时间戳，显示为用户本地时区。这里是 Codex/Work 共享周额度，**不是所有普通 ChatGPT 对话的通用余额，也不是 API 组织用量或 credits 金额**。具体套餐支持、共享范围和服务返回以 OpenAI 当前规则为准；若登录账号或窗口不同，应对照自己的官方使用情况界面。
 
-默认每 5 分钟刷新，可选 1/5/15/60 分钟、关闭或手动刷新。25 秒有界读取在后台运行。失败保留旧值并标明旧值/更新时间；字段缺失、模糊或过期不编造数值，不在重置时推断 100%。手动来源只是明确标记的备选，不等同实时数据。
+默认每 5 分钟刷新，可选 1/5/15/60 分钟、关闭或手动刷新。25 秒有界读取在后台运行。失败保留旧值并标明旧值/更新时间；字段缺失、模糊或过期不编造数值，不在重置时推断 100%。手动预览单独保存并明确标记，不等同实时数据。
 
 挂件不打开认证文件，不复制凭据、不使用私有 HTTP 接口。官方客户端在自身内部使用既有认证，查询可能触发其正常服务请求；它不是完全离线额度查询。详见 [安全与隐私](PRIVACY.md)。
 
@@ -37,10 +37,17 @@ An unofficial community Windows desktop companion by MissGPT-DragonDen. Not affi
 
 ## 1.1.0 三档表情 / Three expression tiers
 
-官方有效周剩余：≥50% 屑笑，20%–<50% 慌张，<20% 流泪。50%与20%的边界不含糊。读取失败、过期、未知或手动数据不触发新表情，保留上次有效状态并显示旧值标识。两种形象都有三张内置透明PNG；流泪半身抬高黑牌使用独立坐标，镜像只翻角色不翻文字。未配对的自定义角色继续显示原图。
+官方有效周剩余：≥50% 屑笑，20%–<50% 慌张，<20% 流泪。50%与20%的边界不含糊。读取失败、过期或未知的官方数据保留上次有效状态并显示旧值标识。明确标注的手动预览可独立测试各档，不更改官方表情状态。两种形象都有三张内置透明PNG；流泪半身抬高黑牌使用独立坐标，镜像只翻角色不翻文字。未配对的自定义角色继续显示原图。
 
-Fresh official weekly remaining selects smug (≥50%), panic (20%–<50%) or tearful (<20%). Invalid, unavailable, stale, manual or failed data never triggers a new expression; the last accepted expression stays with the existing stale marker. Both appearances bundle three RGBA images; the raised tearful placard uses a separate calibrated frame. Custom unpaired art remains unchanged. Updating preserves the public settings profile; the private candidate has a separate profile.
+Fresh official weekly remaining selects smug (≥50%), panic (20%–<50%) or tearful (<20%). Invalid, unavailable, stale or failed official data holds the last accepted expression with the existing stale marker. Explicitly labeled manual preview can independently test each tier without changing the accepted official mood. Both appearances bundle three RGBA images; the raised tearful placard uses a separate calibrated frame. Custom unpaired art remains unchanged. Updating preserves the public settings profile; the private candidate has a separate profile.
 
 验证预览中的75/35/10%是隔离测试值，不是用户额度；运行程序才经已登录的官方Codex只读状态刷新。新版本无需重新授权；无自启动注册、安装修改或实时账号查询用于测试。
 
 Preview percentages are explicitly synthetic QA values, not your account usage. Runtime retains the existing authenticated official Codex read-only mechanism. Tests did not query an account, register startup or modify the installed copy.
+
+
+## 1.1.1 手动预览修复 / Manual preview fix
+
+右键「台词与手动用量」输入0–100或「剩余 50%」，保存后立即进入明确标注的手动预览。0/19%流泪，20/49%慌张，50/100%屑笑。预览不代表账户剩余额度，没有真实重置时间；官方新查询暂停，已经在途的读取不会覆盖预览。预览值与官方缓存分开保存，重启仍保留预览模式。清空输入再保存、勾选「清除预览，恢复官方模式」或菜单「退出预览 / 恢复官方模式」可返回官方数据；原刷新开关与间隔随后生效。非法输入原地报错，保留当前状态。旧手动记录自动迁移为预览。
+
+Right-click Dialogue / manual usage, enter 0–100 or "Remaining 50%", then save. The widget immediately enters explicitly labeled manual preview: 0/19% tearful, 20/49% panic, 50/100% smug. Preview is not an account reading and has no actual reset time. New official queries pause; an in-flight result cannot replace preview. Preview and official snapshots are persisted separately, including across restart. Clear the input and save, select Clear preview and restore official mode, or choose Exit preview / restore official mode to resume the original refresh preference. Invalid input shows an inline error without changing state. Legacy manual readings migrate into preview.

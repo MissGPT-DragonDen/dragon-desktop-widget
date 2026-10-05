@@ -1,6 +1,6 @@
 ﻿Set-StrictMode -Version Latest
 function New-DragonState {
-    return @{ Version=6; Language='zh'; LastQuotaExpression='smug'; LowImages=@{full='';bust=''}; TearfulImages=@{full='';bust=''}; ExpressionPlacards=@{panic=@{X=.4634;Y=.7004;Width=.4128;Height=.1731};tearful=@{X=.4400;Y=.5680;Width=.3620;Height=.1580}}; Placard=@{X=.4634;Y=.7004;Width=.4128;Height=.1731}; RefreshMinutes=5; AutoRefresh=$true; Appearance='full'; Images=@{full='';bust=''}; Sizes=@{full=180;bust=220}; Layouts=@{full='Bottom';bust='Center'}; Size=180; X=0.90; Y=0.75; Edge='right'; Topmost=$true; Mode='sequence'; Lines=@((T '呵，就这？'),(T '累了就休息一下吧。'),(T '我的用量数据还没有可靠来源。')); Image=''; Usage=$null }
+    return @{ Version=7; UsageMode='official'; ManualUsage=$null; Language='zh'; LastQuotaExpression='smug'; LowImages=@{full='';bust=''}; TearfulImages=@{full='';bust=''}; ExpressionPlacards=@{panic=@{X=.4634;Y=.7004;Width=.4128;Height=.1731};tearful=@{X=.4400;Y=.5680;Width=.3620;Height=.1580}}; Placard=@{X=.4634;Y=.7004;Width=.4128;Height=.1731}; RefreshMinutes=5; AutoRefresh=$true; Appearance='full'; Images=@{full='';bust=''}; Sizes=@{full=180;bust=220}; Layouts=@{full='Bottom';bust='Center'}; Size=180; X=0.90; Y=0.75; Edge='right'; Topmost=$true; Mode='sequence'; Lines=@((T '呵，就这？'),(T '累了就休息一下吧。'),(T '我的用量数据还没有可靠来源。')); Image=''; Usage=$null }
 }
 function Get-DragonField($Object,[string]$Name) {
     if($null -eq $Object){return $null}
@@ -52,7 +52,29 @@ function Convert-DragonState($Raw) {
         $u=$Raw.Usage
         try { $cachedPercent=Get-DragonField $u 'Percent';if($null -eq $cachedPercent -or $cachedPercent -is [bool]){throw 'Missing or invalid cached percentage'};$percent=[double]$cachedPercent; $time=[DateTimeOffset]::Parse($u.ReadAt); if (!([double]::IsNaN($percent) -or [double]::IsInfinity($percent)) -and $percent -ge 0 -and $percent -le 100 -and $u.Source -in @('manual','manual-paste','official-codex') -and $time -le [DateTimeOffset]::UtcNow.AddMinutes(1)) { $s.Usage=@{Percent=$percent;ReadAt=$time.ToString('o');Source=$u.Source;Metric=(T '界面显示的剩余百分比（具体额度范围未验证）')} };if($u.Source -eq 'official-codex' -and $null -ne $s.Usage){if($u.WindowMinutes -ne 10080 -or [long]$u.ResetAt -le 0){$s.Usage=$null}else{[DateTimeOffset]::FromUnixTimeSeconds([long]$u.ResetAt)|Out-Null;$s.Usage.ResetAt=[long]$u.ResetAt;$s.Usage.WindowMinutes=10080;$s.Usage.Metric='Codex/Work shared weekly quota'}} } catch {$s.Usage=$null}
     }
+    # Migrate legacy saved manual readings into an explicitly isolated preview.
+    $manual=Get-DragonField $Raw 'ManualUsage'
+    $legacy=$null -ne $s.Usage -and $s.Usage.Source -in @('manual','manual-paste')
+    if($legacy){$manual=$s.Usage;$s.Usage=$null}
+    if($null -ne $manual){
+        try{
+            $value=Get-DragonField $manual 'Percent'
+            if($null -eq $value -or [Type]::GetTypeCode($value.GetType()).ToString() -notin @('Byte','SByte','Int16','UInt16','Int32','UInt32','Int64','UInt64','Single','Double','Decimal')){throw 'Invalid preview percentage'}
+            $percent=[double]$value;$read=[DateTimeOffset]::Parse((Get-DragonField $manual 'ReadAt'));$source=Get-DragonField $manual 'Source'
+            if([double]::IsNaN($percent) -or [double]::IsInfinity($percent) -or $percent -lt 0 -or $percent -gt 100 -or $source -notin @('manual','manual-paste') -or $read -gt [DateTimeOffset]::UtcNow.AddMinutes(1)){throw 'Invalid preview'}
+            $s.ManualUsage=@{Percent=$percent;ReadAt=$read.ToString('o');Source=$source}
+        }catch{$s.ManualUsage=$null}
+    }
+    if(($legacy -or (Get-DragonField $Raw 'UsageMode') -eq 'manual-preview') -and $null -ne $s.ManualUsage){$s.UsageMode='manual-preview'}
     return $s
+}
+function Get-DragonDisplayUsage($State){
+    if((Get-DragonField $State 'UsageMode') -eq 'manual-preview'){
+        $manual=Get-DragonField $State 'ManualUsage'
+        if($null -eq $manual){return $null}
+        return @{Source='manual-preview';Percent=$manual.Percent;ReadAt=$manual.ReadAt;InputSource=$manual.Source}
+    }
+    return $State.Usage
 }
 function Get-DragonPosition($State, [double]$Left, [double]$Top, [double]$Width, [double]$Height) {
     $maxX=[Math]::Max(0,$Width-$State.Size);$maxY=[Math]::Max(0,$Height-$State.Size)
@@ -60,6 +82,10 @@ function Get-DragonPosition($State, [double]$Left, [double]$Top, [double]$Width,
     return @{Left=$Left+$x;Top=$Top+$State.Y*$maxY}
 }
 function Get-DragonUsage($State, $Now=[DateTimeOffset]::UtcNow) {
+    if($State.UsageMode -eq 'manual-preview'){
+        $u=Get-DragonDisplayUsage $State;if($null -eq $u){return (T '手动预览不可用')}
+        return (T "手动预览：$($u.Percent)%`n来源：手动输入 / 非实时`n记录时间：$([DateTimeOffset]::Parse($u.ReadAt).ToLocalTime().ToString('yyyy-MM-dd HH:mm:ss zzz'))`n无真实重置时间；官方查询已暂停。清空预览或选择恢复官方模式。")
+    }
     if ($null -eq $State.Usage) { return (T '每周限额不可用（尚无有效官方读数）。请检查官方客户端登录并刷新。') }
     $u=$State.Usage;$time=[DateTimeOffset]::Parse($u.ReadAt)
     if($u.Source -eq 'official-codex'){

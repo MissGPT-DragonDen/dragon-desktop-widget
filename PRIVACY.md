@@ -24,3 +24,10 @@ This is an unofficial community project with no OpenAI affiliation or endorsemen
 - Launcher execution-policy bypass affects only that PowerShell process, not permanent policy. Scripts are unsigned. Inspect the source and respect managed-device restrictions.
 - The PowerShell/WPF application runs with ordinary current-user permissions; it is not a sandbox. No existing credentials, account readings or chat data ship in the release.
 - Review diagnostics before sharing: OS errors may include personal paths and use your OS language. Developer screenshot/state-dump entry points are removed from the public version. Language selection adds no remote service or permissions.
+
+
+## 手动预览 / Manual preview
+
+手动预览仅保存输入的百分比、来源与记录时间；不读取账户或屏幕。预览与官方缓存分离，暂停新官方查询；已在途请求仍可完成但不改变预览显示。退出预览恢复用户原刷新设置。预览不是实际额度，不生成重置时间。
+
+Manual preview stores only the entered percentage, source and record time, separately from official snapshots. It reads no account or screen data. New official queries pause; an in-flight request may finish without replacing the preview. Leaving preview resumes the original refresh preferences. Preview is not actual usage and has no fabricated reset.
