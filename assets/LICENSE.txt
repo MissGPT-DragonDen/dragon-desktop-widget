@@ -1,7 +1,8 @@
 SPDX-License-Identifier: CC0-1.0
 
 To the extent MissGPT-DragonDen holds copyright and related rights in
-smug-full.png and smug-halfbody-placard.png, those rights are dedicated
+smug-full.png, smug-halfbody-placard.png, full-low-quota.png,
+full-tearful.png, bust-low-quota.png and bust-tearful.png, those rights are dedicated
 to the public domain under CC0 1.0 Universal.
 
 Canonical CC0 dedication: https://creativecommons.org/publicdomain/zero/1.0/
