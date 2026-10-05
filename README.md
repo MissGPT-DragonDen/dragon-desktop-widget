@@ -1,8 +1,8 @@
 # 白毛龙娘桌面挂件 / White Dragon Desktop Widget
 
-An unofficial community Windows desktop companion by MissGPT-DragonDen. Not affiliated with or endorsed by OpenAI. Our code and documentation use 0BSD; our rights in the two listed project-generated artworks are contributed under CC0-1.0. No attribution is required for our contributions.
+An unofficial community Windows desktop companion by MissGPT-DragonDen. Not affiliated with or endorsed by OpenAI. Our code and documentation use 0BSD; our rights in the six listed project-generated artworks are contributed under CC0-1.0. No attribution is required for our contributions.
 
-这是**非官方社区作品**，独立 Windows 桌面程序，不需要打开 ChatGPT 网页，与 ChatGPT 原生宠物项目分开。当前公开准备版本 **1.0.0 public**：基于已验收 v8，新增双语 UI、独立公开版配置及发布清理；不是未经修改的原版。
+这是**非官方社区作品**，独立 Windows 桌面程序，不需要打开 ChatGPT 网页，与 ChatGPT 原生宠物项目分开。当前公开准备版本 **1.1.0 public**：基于已验收 v8，新增双语 UI、独立公开版配置及发布清理；不是未经修改的原版。
 
 [English documentation](README.en.md)
 
@@ -26,10 +26,21 @@ An unofficial community Windows desktop companion by MissGPT-DragonDen. Not affi
 
 ## 发行与权利
 
-自有代码/文档使用 [0BSD](LICENSE)，不要求署名；列明的两张美术在可授权权利范围内使用 [CC0](ASSET_RIGHTS.md)。可自由用、改、分发和商用我们的贡献。见 [版本记录](CHANGELOG.md) 和 [非官方/第三方说明](NOTICE.md)。不再许可第三方商标、系统字体或参考素材。公开包不包含参考图、个人配置、额度读数、日志或客户端二进制。`MANIFEST.json` 记录各公开文件 SHA256，`Build.ps1` 仅打包明确列出的文件。
+自有代码/文档使用 [0BSD](LICENSE)，不要求署名；列明的六张美术在可授权权利范围内使用 [CC0](ASSET_RIGHTS.md)。可自由用、改、分发和商用我们的贡献。见 [版本记录](CHANGELOG.md) 和 [非官方/第三方说明](NOTICE.md)。不再许可第三方商标、系统字体或参考素材。公开包不包含参考图、个人配置、额度读数、日志或客户端二进制。`MANIFEST.json` 记录各公开文件 SHA256，`Build.ps1` 仅打包明确列出的文件。
 
 ## 兼容性与验证范围
 
 沿用 v8 的 Windows WPF 验证：双形象、托盘/单实例、真实官方读取、错误保留、取消退出及左右贴边已验证；当前屏幕 150% 缩放和短三角常见尺寸已检查。跨屏、其他 DPI、真实重启/登录尚未实测。公开整理还对双语言菜单/托盘/气泡/黑牌、语言保存、英文百分比及重置文本做了聚焦窗口检查，未重新查询额度或重跑全部历史UI测试。
 
 官方来源：[Codex App Server](https://developers.openai.com/codex/app-server/)、[Using Codex with your ChatGPT plan](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan)。接口与客户端未来变化可能影响兼容性。
+
+
+## 1.1.0 三档表情 / Three expression tiers
+
+官方有效周剩余：≥50% 屑笑，20%–<50% 慌张，<20% 流泪。50%与20%的边界不含糊。读取失败、过期、未知或手动数据不触发新表情，保留上次有效状态并显示旧值标识。两种形象都有三张内置透明PNG；流泪半身抬高黑牌使用独立坐标，镜像只翻角色不翻文字。未配对的自定义角色继续显示原图。
+
+Fresh official weekly remaining selects smug (≥50%), panic (20%–<50%) or tearful (<20%). Invalid, unavailable, stale, manual or failed data never triggers a new expression; the last accepted expression stays with the existing stale marker. Both appearances bundle three RGBA images; the raised tearful placard uses a separate calibrated frame. Custom unpaired art remains unchanged. Updating preserves the public settings profile; the private candidate has a separate profile.
+
+验证预览中的75/35/10%是隔离测试值，不是用户额度；运行程序才经已登录的官方Codex只读状态刷新。新版本无需重新授权；无自启动注册、安装修改或实时账号查询用于测试。
+
+Preview percentages are explicitly synthetic QA values, not your account usage. Runtime retains the existing authenticated official Codex read-only mechanism. Tests did not query an account, register startup or modify the installed copy.

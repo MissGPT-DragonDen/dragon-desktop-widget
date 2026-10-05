@@ -35,3 +35,11 @@ function Get-DragonAttachedBubbleLayout([double]$Size,[double]$BodyWidth,[double
     $tail='M {0},{1} L {2},{3} L {4},{5} Z' -f ($tipX-$left).ToString($culture),($tipY-$top).ToString($culture),($baseX-$left).ToString($culture),($baseY-$top).ToString($culture),($baseX-$left).ToString($culture),($baseY+$tailWidth-$top).ToString($culture)
     return @{Left=$left;Top=$top;Width=$right-$left;Height=$bottom-$top;BodyX=$bodyX-$left;BodyY=$bodyY-$top;Tail=$tail;MouthX=$mouthX;MouthY=$mouthY;TailLength=$tailLength;TailWidth=$tailWidth;TipX=$tipX;TipY=$tipY}
 }
+
+function Get-DragonExpressionPlacardRect($State,[double]$Width,[double]$Height,[string]$Mood){
+    if($Mood -eq 'smug'){$frame=$State.Placard}else{$frame=Get-DragonField $State.ExpressionPlacards $Mood}
+    # A raised/new placard must be calibrated from real pixels before overlaying it.
+    if($null -eq $frame){return $null}
+    $layout=@{Size=$State.Size;Layouts=$State.Layouts;Edge=$State.Edge;Placard=$frame}
+    return Get-DragonPlacardRect $layout $Width $Height
+}

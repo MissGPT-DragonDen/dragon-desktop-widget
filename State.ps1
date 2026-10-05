@@ -1,6 +1,6 @@
 ﻿Set-StrictMode -Version Latest
 function New-DragonState {
-    return @{ Version=4; Language='zh'; Placard=@{X=.4634;Y=.7004;Width=.4128;Height=.1731}; RefreshMinutes=5; AutoRefresh=$true; Appearance='full'; Images=@{full='';bust=''}; Sizes=@{full=180;bust=220}; Layouts=@{full='Bottom';bust='Center'}; Size=180; X=0.90; Y=0.75; Edge='right'; Topmost=$true; Mode='sequence'; Lines=@((T '呵，就这？'),(T '累了就休息一下吧。'),(T '我的用量数据还没有可靠来源。')); Image=''; Usage=$null }
+    return @{ Version=6; Language='zh'; LastQuotaExpression='smug'; LowImages=@{full='';bust=''}; TearfulImages=@{full='';bust=''}; ExpressionPlacards=@{panic=@{X=.4634;Y=.7004;Width=.4128;Height=.1731};tearful=@{X=.4400;Y=.5680;Width=.3620;Height=.1580}}; Placard=@{X=.4634;Y=.7004;Width=.4128;Height=.1731}; RefreshMinutes=5; AutoRefresh=$true; Appearance='full'; Images=@{full='';bust=''}; Sizes=@{full=180;bust=220}; Layouts=@{full='Bottom';bust='Center'}; Size=180; X=0.90; Y=0.75; Edge='right'; Topmost=$true; Mode='sequence'; Lines=@((T '呵，就这？'),(T '累了就休息一下吧。'),(T '我的用量数据还没有可靠来源。')); Image=''; Usage=$null }
 }
 function Get-DragonField($Object,[string]$Name) {
     if($null -eq $Object){return $null}
@@ -13,6 +13,19 @@ function Limit-Number($Value, [double]$Default, [double]$Min, [double]$Max) {
 function Convert-DragonState($Raw) {
     $s=New-DragonState
     if ($null -eq $Raw) { return $s }
+    if($Raw.Contains('LastQuotaExpression') -and $Raw.LastQuotaExpression -in @('smug','panic','tearful')){$s.LastQuotaExpression=$Raw.LastQuotaExpression}
+    $low=Get-DragonField $Raw 'LowImages';foreach($slot in @('full','bust')){$path=Get-DragonField $low $slot;if($path -is [string]){$s.LowImages[$slot]=$path}}
+    $tears=Get-DragonField $Raw 'TearfulImages';foreach($slot in @('full','bust')){$path=Get-DragonField $tears $slot;if($path -is [string]){$s.TearfulImages[$slot]=$path}}
+    $frames=Get-DragonField $Raw 'ExpressionPlacards'
+    foreach($mood in @('panic','tearful')){
+        $rawFrame=Get-DragonField $frames $mood
+        if($null -ne $rawFrame){$s.ExpressionPlacards[$mood]=$null}
+        if($null -ne $rawFrame){
+            $frame=@{};$valid=$true
+            foreach($key in @('X','Y','Width','Height')){$v=Get-DragonField $rawFrame $key;if($null -eq $v -or $v -is [bool]){$valid=$false;break};try{$v=[double]$v;if([double]::IsNaN($v) -or [double]::IsInfinity($v) -or $v -lt 0 -or $v -gt 1){$valid=$false;break};$frame[$key]=$v}catch{$valid=$false;break}}
+            if($valid -and $frame.Width -gt 0 -and $frame.Height -gt 0 -and $frame.X+$frame.Width -le 1 -and $frame.Y+$frame.Height -le 1){$s.ExpressionPlacards[$mood]=$frame}
+        }
+    }
     if($Raw.Contains('Language') -and $Raw.Language -in @('zh','en')){$s.Language=$Raw.Language}
     foreach ($key in @('Size','X','Y')) { if ($Raw.Contains($key)) { $limits=@{Size=@(80,320);X=@(0,1);Y=@(0,1)}; $s[$key]=Limit-Number $Raw[$key] $s[$key] $limits[$key][0] $limits[$key][1] } }
     if ($Raw.Contains('Edge') -and $Raw.Edge -in @('left','right','free')) { $s.Edge=$Raw.Edge }

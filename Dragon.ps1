@@ -7,6 +7,7 @@ if(-not ('DragonDesktopIdentity' -as [type])){
 [DragonDesktopIdentity]::SetCurrentProcessExplicitAppUserModelID('WhiteDragonWidget.Public')|Out-Null
 . "$PSScriptRoot\I18n.ps1"
 . "$PSScriptRoot\State.ps1"
+. "$PSScriptRoot\Expression.ps1"
 . "$PSScriptRoot\Quota.ps1"
 . "$PSScriptRoot\Placard.ps1"
 . "$PSScriptRoot\Startup.ps1"
@@ -25,7 +26,7 @@ try { if(Test-Path -LiteralPath $SettingsPath){$raw=Get-Content -LiteralPath $Se
 $script:uiLanguage=$script:state.Language
 function Get-BundledDragonImage([string]$Slot){$name=if($Slot -eq 'bust'){'smug-halfbody-placard.png'}else{'smug-full.png'};return Join-Path $PSScriptRoot ('assets\'+$name)}
 foreach($slot in @('full','bust')){if(!$script:state.Images[$slot]){$bundled=Get-BundledDragonImage $slot;if(Test-Path -LiteralPath $bundled){$script:state.Images[$slot]=$bundled}}}
-$script:lineIndex=0;$script:dragged=$false;$script:held=$false;$script:pressed=$false
+$script:displayImageIsFallback=$false;$script:renderedExpression='smug';$script:quotaFailed=$false;$script:displayImageKey='';$script:lineIndex=0;$script:dragged=$false;$script:held=$false;$script:pressed=$false
 function Save-State {
     if((Test-Path -LiteralPath $SettingsPath) -and !(Test-Path -LiteralPath ($SettingsPath+'.pre-v4.bak'))){
         try{Copy-Item -LiteralPath $SettingsPath -Destination ($SettingsPath+'.pre-v4.bak') -ErrorAction Stop}catch{Show-Bubble (T '升级配置备份失败；当前配置未覆盖。');return}
@@ -94,19 +95,51 @@ function Apply-State {
     $script:state.Image=$script:state.Images[$active];$script:state.Size=$script:state.Sizes[$active]
     $script:window.Width=$script:state.Size;$script:window.Height=$script:state.Size;$script:window.Topmost=$script:state.Topmost
     $a=Get-WorkArea;$p=Get-DragonPosition $script:state $a.Left $a.Top $a.Width $a.Height;$script:window.Left=$p.Left;$script:window.Top=$p.Top
-    $script:facing.ScaleX=if($script:state.Edge -eq 'right'){-1}else{1}
+    $script:facing.ScaleX=Get-DragonExpressionFacing $script:state.Edge
     (Find 'PlaceholderFacing').ScaleX=$script:facing.ScaleX
     (Find 'PlaceholderTitle').Text=if($active -eq 'full'){(T '全身Q版')}else{(T '半身像')}
     $script:character.VerticalAlignment=$script:state.Layouts[$active]
     $script:character.HorizontalAlignment='Center';$script:character.Stretch='Uniform'
     foreach($key in $script:appearanceItems.Keys){$script:appearanceItems[$key].IsChecked=$key -eq $active}
     foreach($key in $script:layoutItems.Keys){$script:layoutItems[$key].IsChecked=$key -eq $script:state.Layouts[$active]}
-    $script:character.Source=$null;$script:placeholder.Visibility='Visible'
-    if($script:state.Image){
-      try{if(!(Test-DragonImagePath $script:state.Image)){throw (T '只支持本地图片')};if((Get-Item -LiteralPath $script:state.Image).Length -gt 10MB){throw (T '图片过大')};$bitmap=New-Object Windows.Media.Imaging.BitmapImage;$bitmap.BeginInit();$bitmap.CacheOption='OnLoad';$bitmap.CreateOptions='IgnoreImageCache';$bitmap.UriSource=New-Object Uri($script:state.Image);$bitmap.EndInit();$bitmap.Freeze();if($bitmap.PixelWidth -gt 4096 -or $bitmap.PixelHeight -gt 4096){throw (T '图片过大')};$script:character.Source=$bitmap;$script:placeholder.Visibility='Collapsed'}catch{Show-Bubble (T '当前形象图片不可用，显示开发占位；另一槽位保留。')}
-    }
+    Update-ExpressionImage
     Update-Placard
     Update-FullQuotaBubble
+}
+function Update-ExpressionImage {
+    $choice=Resolve-DragonExpression $script:state.Usage $script:state.LastQuotaExpression $script:quotaFailed $script:state.RefreshMinutes
+    if($choice.Accepted){$script:state.LastQuotaExpression=$choice.Mood}
+    $slot=$script:state.Appearance;$normal=$script:state.Images[$slot]
+    $customLow=if($choice.Mood -eq 'tearful'){$script:state.TearfulImages[$slot]}else{$script:state.LowImages[$slot]}
+    $suffix=if($choice.Mood -eq 'tearful'){'-tearful.png'}else{'-low-quota.png'}
+    $low=if($customLow){$customLow}else{Join-Path $PSScriptRoot ('assets/'+$slot+$suffix)}
+    $lowAvailable=Test-DragonImagePath $low
+    $isBuiltIn=if($choice.Mood -in @('panic','tearful') -and $lowAvailable -and !$customLow){Test-DragonBuiltInImage $normal (Get-BundledDragonImage $slot)}else{$false}
+    $selectedImage=Resolve-DragonExpressionImage $choice.Mood $normal $low $isBuiltIn ([bool]$customLow) $lowAvailable
+    $script:renderedExpression=if($selectedImage -ne $normal){$choice.Mood}else{'smug'}
+    # Keep Image as the user's normal-slot identity; rendering selection is separate.
+    $key=$selectedImage
+    if($selectedImage -ne $normal -and (Test-Path -LiteralPath $normal -PathType Leaf)){$info=Get-Item -LiteralPath $normal;$key+='|normal:'+ $normal+'|'+$info.LastWriteTimeUtc.Ticks+'|'+$info.Length}
+    if(Test-Path -LiteralPath $selectedImage -PathType Leaf){$info=Get-Item -LiteralPath $selectedImage;$key+='|'+$info.LastWriteTimeUtc.Ticks+'|'+$info.Length}
+    if($script:displayImageKey -eq $key -and $null -ne $script:character.Source){if($script:displayImageIsFallback){$script:renderedExpression='smug'};return}
+    $script:displayImageKey=$key
+    $script:displayImageIsFallback=$false
+    try{$bitmap=Read-ExpressionBitmap $selectedImage}
+    catch{
+        $script:displayImageIsFallback=$true;$script:renderedExpression='smug'
+        if($selectedImage -ne $normal){try{$bitmap=Read-ExpressionBitmap $normal}catch{$bitmap=$script:character.Source}}
+        else{$bitmap=$null}
+        Show-Bubble (T '表情图片不可用，保留普通形象。')
+    }
+    $script:character.Source=$bitmap;$script:placeholder.Visibility=if($null -eq $bitmap){'Visible'}else{'Collapsed'}
+}
+function Read-ExpressionBitmap([string]$Path){
+    if(!(Test-DragonImagePath $Path)){throw 'Local image unavailable'}
+    if((Get-Item -LiteralPath $Path).Length -gt 10MB){throw 'Image too large'}
+    $bitmap=New-Object Windows.Media.Imaging.BitmapImage;$bitmap.BeginInit();$bitmap.CacheOption='OnLoad';$bitmap.CreateOptions='IgnoreImageCache';$bitmap.UriSource=New-Object Uri($Path);$bitmap.EndInit();$bitmap.Freeze()
+    if($bitmap.PixelWidth -gt 4096 -or $bitmap.PixelHeight -gt 4096){throw 'Image too large'}
+    return $bitmap
+
 }
 function Remember-Position([bool]$Snap=$true){
     $a=Get-WorkArea;$mx=[Math]::Max(0,$a.Width-$script:state.Size);$my=[Math]::Max(0,$a.Height-$script:state.Size)
@@ -237,7 +270,8 @@ function Update-Placard {
     (Find 'QuotaBadgeBorder').Visibility='Collapsed'
     if(!$bust){return}
     $source=$script:character.Source;$pw=if($source){$source.PixelWidth}else{1};$ph=if($source){$source.PixelHeight}else{1}
-    $rect=Get-DragonPlacardRect $script:state $pw $ph;$panel=Find 'QuotaPlacard'
+    $rect=Get-DragonExpressionPlacardRect $script:state $pw $ph $script:renderedExpression;$panel=Find 'QuotaPlacard'
+    if($null -eq $rect){(Find 'PlacardCanvas').Visibility='Collapsed';(Find 'QuotaBadgeBorder').Visibility='Visible';return}
     [Windows.Controls.Canvas]::SetLeft($panel,$rect.Left);[Windows.Controls.Canvas]::SetTop($panel,$rect.Top);$panel.Width=$rect.Width;$panel.Height=$rect.Height
     $u=$script:state.Usage
     $official=$null -ne $u -and $u.Source -eq 'official-codex'
@@ -308,6 +342,7 @@ function Position-FullQuotaBubble {
 
 }
 function Update-QuotaBadge {
+    Update-ExpressionImage
     Update-Placard
     Update-FullQuotaBubble
     $label=Find 'QuotaBadge'
@@ -333,7 +368,7 @@ $script:menu.Items.Add($intervalMenu)|Out-Null
 $script:quotaTimer=New-Object Windows.Threading.DispatcherTimer;$script:quotaTimer.Interval=[TimeSpan]::FromSeconds(1)
 $script:quotaTimer.Add_Tick({
     if($null -ne $script:quotaWorker -and $script:quotaPending.IsCompleted){
-        try{$result=$script:quotaWorker.EndInvoke($script:quotaPending);if($script:quotaWorker.HadErrors -or $result.Count -ne 1){throw 'Read failed'};$script:state.Usage=$result[0];$script:quotaFailed=$false;Save-State}catch{$script:quotaFailed=$true}
+        try{$result=$script:quotaWorker.EndInvoke($script:quotaPending);if($script:quotaWorker.HadErrors -or $result.Count -ne 1){throw 'Read failed'};$script:state.Usage=$result[0];$script:quotaFailed=$false;Update-ExpressionImage;Save-State}catch{$script:quotaFailed=$true}
         finally{$script:quotaWorker.Dispose();$script:quotaWorker=$null;if($script:quotaCancellation){$script:quotaCancellation.Dispose();$script:quotaCancellation=$null}}
     }
     Update-QuotaBadge

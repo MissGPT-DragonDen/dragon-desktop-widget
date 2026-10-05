@@ -2,7 +2,7 @@
 
 [中文说明](README.md)
 
-An **unofficial community project** by MissGPT-DragonDen, independent of and not endorsed by OpenAI. This Windows companion runs without an open ChatGPT webpage and is separate from the native ChatGPT pet project. **1.0.0 public** derives from accepted v8, adding bilingual UI, a separate public settings profile, and release cleanup; it is not an unchanged copy of v8.
+An **unofficial community project** by MissGPT-DragonDen, independent of and not endorsed by OpenAI. This Windows companion runs without an open ChatGPT webpage and is separate from the native ChatGPT pet project. **1.1.0 public** derives from accepted v8, adding bilingual UI, a separate public settings profile, and release cleanup; it is not an unchanged copy of v8.
 
 ## Run and recover
 
@@ -26,7 +26,7 @@ The widget does not open authentication files, copy tokens, use private HTTP int
 
 ## Licensing and releases
 
-Our code and project-written documentation use [0BSD](LICENSE); our rights in the two named artworks are dedicated under [CC0-1.0](ASSET_RIGHTS.md). No attribution is required for our contributions; you may use, modify, redistribute and commercially use them. Third-party trademark, reference-image and system component rights are not granted. See [NOTICE](NOTICE.md) and [CHANGELOG](CHANGELOG.md).
+Our code and project-written documentation use [0BSD](LICENSE); our rights in the six named artworks are dedicated under [CC0-1.0](ASSET_RIGHTS.md). No attribution is required for our contributions; you may use, modify, redistribute and commercially use them. Third-party trademark, reference-image and system component rights are not granted. See [NOTICE](NOTICE.md) and [CHANGELOG](CHANGELOG.md).
 
 The package contains no personal settings, account readings, screenshots, logs, credentials, reference materials or client binaries. `MANIFEST.json` lists public-file SHA256 values; `Build.ps1` packages an explicit allowlist.
 
@@ -35,3 +35,14 @@ The package contains no personal settings, account readings, screenshots, logs, 
 Inherited v8 evidence covers the Windows WPF interaction, two appearances, tray/single instance, real official reads, retained old readings, cancellation and inward layouts, including the current 150% screen scale. Public release adds focused bilingual menu/tray/bubble/placard, persistence and text-fitting checks. No new quota read or complete historical UI rerun was performed. Multi-monitor, other DPI scales and real reboot/sign-in startup remain untested.
 
 Official references: [Codex App Server](https://developers.openai.com/codex/app-server/) and [Using Codex with your ChatGPT plan](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan). Future client and API changes may affect compatibility.
+
+
+## 1.1.0 三档表情 / Three expression tiers
+
+官方有效周剩余：≥50% 屑笑，20%–<50% 慌张，<20% 流泪。50%与20%的边界不含糊。读取失败、过期、未知或手动数据不触发新表情，保留上次有效状态并显示旧值标识。两种形象都有三张内置透明PNG；流泪半身抬高黑牌使用独立坐标，镜像只翻角色不翻文字。未配对的自定义角色继续显示原图。
+
+Fresh official weekly remaining selects smug (≥50%), panic (20%–<50%) or tearful (<20%). Invalid, unavailable, stale, manual or failed data never triggers a new expression; the last accepted expression stays with the existing stale marker. Both appearances bundle three RGBA images; the raised tearful placard uses a separate calibrated frame. Custom unpaired art remains unchanged. Updating preserves the public settings profile; the private candidate has a separate profile.
+
+验证预览中的75/35/10%是隔离测试值，不是用户额度；运行程序才经已登录的官方Codex只读状态刷新。新版本无需重新授权；无自启动注册、安装修改或实时账号查询用于测试。
+
+Preview percentages are explicitly synthetic QA values, not your account usage. Runtime retains the existing authenticated official Codex read-only mechanism. Tests did not query an account, register startup or modify the installed copy.

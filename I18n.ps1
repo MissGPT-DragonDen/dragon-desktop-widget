@@ -1,5 +1,6 @@
 ﻿$script:uiLanguage='zh'
 $script:translations=@{
+    '表情图片不可用，保留普通形象。'='Expression image unavailable; normal appearance kept.'
     '启动文件名被其他程序占用；未做修改。'='Startup filename is occupied by an unrelated file; nothing changed'
     '挂件源文件路径已不存在。'='Widget source path no longer exists'
 

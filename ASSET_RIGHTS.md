@@ -1,9 +1,11 @@
 # 美术权利范围 / Asset Rights
 
-仅以下两张本项目生成、经用户确认的白毛龙娘 PNG 适用 **CC0-1.0**：
+仅以下六张本项目生成、经用户确认的白毛龙娘 PNG 适用 **CC0-1.0**：
 
 - `assets/smug-full.png`：全身Q版。
 - `assets/smug-halfbody-placard.png`：半身持黑牌。
+- `assets/full-low-quota.png`、`assets/full-tearful.png`：全身慌张 / 流泪。
+- `assets/bust-low-quota.png`、`assets/bust-tearful.png`：半身慌张 / 抬高黑牌流泪。
 
 MissGPT-DragonDen 对上述贡献**实际持有并有权授权的著作权和相关权利**按 [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) 作公共领域贡献，包含法律允许范围内的放弃及其后备许可；[法律文本](https://creativecommons.org/publicdomain/zero/1.0/legalcode)为准。可自由使用、修改和再分发，我们不要求署名。这不表示保证 AI 输出在每个司法区域都存在可独占的著作权。
 
@@ -14,7 +16,7 @@ CC0 只涉及我们持有的权利；第三方商标、隐私/肖像、专利及
 
 # Asset rights — English
 
-Only `assets/smug-full.png` (full body) and `assets/smug-halfbody-placard.png` (half-body placard) are covered by this artwork dedication. MissGPT-DragonDen dedicates copyright and related rights **that it actually holds and can authorize** in these project-generated, user-approved contributions under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/), including its lawful waiver and fallback license; the [legal code](https://creativecommons.org/publicdomain/zero/1.0/legalcode) controls. Our contributions require no attribution and may be freely used, modified and redistributed. This is not a guarantee that AI output has exclusive copyright in every jurisdiction.
+The six bundled artworks `assets/smug-full.png`, `assets/smug-halfbody-placard.png`, `assets/full-low-quota.png`, `assets/full-tearful.png`, `assets/bust-low-quota.png` and `assets/bust-tearful.png` are covered by this artwork dedication. MissGPT-DragonDen dedicates copyright and related rights **that it actually holds and can authorize** in these project-generated, user-approved contributions under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/), including its lawful waiver and fallback license; the [legal code](https://creativecommons.org/publicdomain/zero/1.0/legalcode) controls. Our contributions require no attribution and may be freely used, modified and redistributed. This is not a guarantee that AI output has exclusive copyright in every jurisdiction.
 
 The images were generated for this separate Windows project, not the native ChatGPT pet task. No downloaded reference originals, third-party characters, video frames, official logos, fonts, raw prompts or private generation records are shipped.
 
